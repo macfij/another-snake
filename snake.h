@@ -7,15 +7,14 @@
 class Snake
 {
 private:
-  SDL_Rect waz;
+  SDL_Rect snakeBody;
   int w, h;
-  int pozycja_x[SNAKE_LENGTH], pozycja_y[SNAKE_LENGTH];
-  int *xTablica;
-  int *yTablica;
+  int velocity;
+  int length;
+  int *xPos, *yPos;
   int xVel, yVel;
   bool open;
-  int czynnik;
-  int length;
+  int faceVar;
   
 public:
   Snake();
