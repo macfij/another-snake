@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "snake.h"
 #include "globals.h"
+#include <iostream>
 
 Snake::Snake()
 {
@@ -19,6 +20,7 @@ Snake::Snake()
   }
   xVel = velocity;
   yVel = 0;
+  direction = "RIGHT";
 }
 
 void Snake::handle_input()
@@ -26,21 +28,25 @@ void Snake::handle_input()
   if(event.type==SDL_KEYDOWN){
     switch(event.key.keysym.sym){
     case SDLK_w:
+    	direction = "UP";
       if (yVel == 0)
 	yVel = -velocity;
       xVel = 0;
       break;
     case SDLK_s:
+    	direction = "DOWN";
       if (yVel == 0)
 	yVel = +velocity;
       xVel = 0;
       break;
     case SDLK_a:
+    	direction = "LEFT";
       if (xVel == 0)
 	xVel = -velocity;
       yVel = 0;
       break;
     case SDLK_d:
+    	direction = "RIGHT";
       if (xVel == 0)
 	xVel = +velocity;
       yVel = 0;
@@ -230,4 +236,14 @@ void Snake::grow()
 
   delete [] xOld;
   delete [] yOld;
+}
+
+void Snake::mouth_change_state(bool isOpen)
+{
+	this->open = isOpen;
+}
+
+std::string Snake::get_dir()
+{
+	return this->direction;
 }

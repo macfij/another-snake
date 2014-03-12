@@ -47,9 +47,41 @@ int main(int argc, char* args[]){
 	jedzenie.get_position(xFoodPos, yFoodPos);
 	moj.get_position(xSnakePos, ySnakePos);
 
+
+	if (moj.get_dir() == "UP"){
+		if (xFood-1 == xSnake){
+			if ((ySnake - yFood >= 0) && (ySnake - yFood <= 50))
+				moj.mouth_change_state(true);
+		}
+
+	}
+	if (moj.get_dir() == "DOWN"){
+			if (xFood-1 == xSnake){
+				if ((yFood - ySnake>= 0) && (yFood - ySnake <= 50))
+					moj.mouth_change_state(true);
+			}
+
+	}
+	if (moj.get_dir() == "LEFT"){
+			if (yFood-1 == ySnake){
+				if ((xSnake - xFood >= 0) && (xSnake - xFood <= 50))
+					moj.mouth_change_state(true);
+			}
+
+	}
+	if (moj.get_dir() == "RIGHT"){
+			if (yFood-1 == ySnake){
+				if ((xFood - xSnake >= 0) && (xFood - xSnake <= 50))
+					moj.mouth_change_state(true);
+			}
+
+	}
+
 	if( ((xFood >= xSnake) && (xFood <= xSnake+5)) && ((yFood >= ySnake) && (yFood <= ySnake + 5)) ){
+//		std::cout<<xFood<<" "<<xSnake<<std::endl;
 	  jedzenie.reset_position();
 	  moj.grow();
+	  moj.mouth_change_state(false);
 	}
 	moj.show();
 	jedzenie.show();

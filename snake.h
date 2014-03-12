@@ -3,6 +3,7 @@
 
 #include "SDL/SDL.h"
 #include "constants.h"
+#include <string>
 
 class Snake
 {
@@ -15,6 +16,7 @@ private:
   int xVel, yVel;
   bool open;
   int faceVar;
+  std::string direction;
   
 public:
   Snake();
@@ -23,5 +25,7 @@ public:
   void show();
   void get_position(int*, int*);
   void grow();
+  void mouth_change_state(bool);
+  std::string get_dir();
 };
 #endif
