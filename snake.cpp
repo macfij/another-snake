@@ -23,6 +23,16 @@ Snake::Snake()
   direction = "RIGHT";
 }
 
+void Snake::check_collision()
+{
+	int xCopyHead = xPos[0];
+	int yCopyHead = yPos[0];
+	for (int j = 1; j < length; j++){
+		if (xCopyHead == xPos[j] && yCopyHead == yPos[j])
+			std::cout<<"duap"<<std::endl;
+	}
+}
+
 void Snake::handle_input()
 {
   if(event.type==SDL_KEYDOWN){

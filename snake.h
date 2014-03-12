@@ -27,5 +27,6 @@ public:
   void grow();
   void mouth_change_state(bool);
   std::string get_dir();
+  void check_collision();
 };
 #endif

@@ -47,7 +47,6 @@ int main(int argc, char* args[]){
 	jedzenie.get_position(xFoodPos, yFoodPos);
 	moj.get_position(xSnakePos, ySnakePos);
 
-
 	if (moj.get_dir() == "UP"){
 		if (xFood-1 == xSnake){
 			if ((ySnake - yFood >= 0) && (ySnake - yFood <= 50))
@@ -78,13 +77,13 @@ int main(int argc, char* args[]){
 	}
 
 	if( ((xFood >= xSnake) && (xFood <= xSnake+5)) && ((yFood >= ySnake) && (yFood <= ySnake + 5)) ){
-//		std::cout<<xFood<<" "<<xSnake<<std::endl;
 	  jedzenie.reset_position();
 	  moj.grow();
 	  moj.mouth_change_state(false);
 	}
 	moj.show();
 	jedzenie.show();
+	moj.check_collision();
 
 	if(SDL_Flip(screen)==-1) return 1;
 
