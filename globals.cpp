@@ -10,3 +10,6 @@ int *xSnakePos, *ySnakePos;
 
 int frame = 0;
 bool cap = true;
+
+int state = NULL_STATE;
+int nextState = NULL_STATE;
