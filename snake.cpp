@@ -101,6 +101,7 @@ void Snake::show() {
                         (*(yPos + i) % 255), 128));
     }
     // OPCJA 2.5
+    // to nowy tekst w ramach testu!
     if (xVel != 0) {
         if (xVel >= 0)
             faceVar = -1;
