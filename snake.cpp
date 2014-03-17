@@ -4,6 +4,14 @@
 #include "globals.h"
 #include <iostream>
 
+/*
+  Function Snake() creates a new snake.
+
+  Snake is the length of SNAKE_LENGTH and has velocity of SNAKE_VELOCITY
+  which can be found in file 'constants.h'. On default snake's mouth is
+  closed. Snake starts moving from the center of screen and goes to the
+  right.
+*/
 Snake::Snake() {
     w = 5;
     h = 5;
@@ -31,6 +39,12 @@ bool Snake::check_collision() {
     return false;
 }
 
+/*
+  Function handle_input translates keys pressed by user into changes of
+  horizontal and vertical velocity of snake.
+
+  Pressing 'f' button opens and closes snakes mouth.
+*/
 void Snake::handle_input() {
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
@@ -68,6 +82,17 @@ void Snake::handle_input() {
     }
 }
 
+/*
+  Function move changes the coordinates of each block of snake's body.
+
+  First the tail blocks are moved into previous position of the next
+  block. Then the position of head is changed accordingly to the
+  direction of movement.
+
+  Function also handles reaching the end of the screen. If snakes head
+  should move out of the screen it's moved to the opposite edge of the
+  screen.
+*/
 void Snake::move() {
     for (int i = length - 1; i > 0; i--) {
         *(xPos + i) = *(xPos + i - 1);
@@ -89,6 +114,11 @@ void Snake::move() {
         *yPos += yVel;
 }
 
+/*
+  Function show draws each block of snake on the screen.
+
+  First it draws the tail and later the opened or closed mouth of snake.
+*/
 void Snake::show() {
     
     for (int i = 1; i < length; i++) {
@@ -100,9 +130,6 @@ void Snake::show() {
 		     SDL_MapRGB(screen->format, (*(xPos + i) % 255),
 				(*(yPos + i) % 255), 128));
     }
-    // OPCJA 2.5
-    // to nowy tekst w ramach testu!
-    // AUTO-ustawianie TEST.
     if (xVel != 0) {
         if (xVel >= 0)
             faceVar = -1;
@@ -114,27 +141,23 @@ void Snake::show() {
             snakeBody.y = *yPos - 2;
             snakeBody.w = 8;
             snakeBody.h = 7;
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
-				    128));
+            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255), 128));
 	    
-            //Nadglowie duze
+            //Bigger piece of snakes head.
             snakeBody.x = *xPos + 3 + faceVar * 3;
             snakeBody.y = *yPos - 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Nadglowie male
+            //Smaller piece of snakes head.
             snakeBody.x = *xPos + 3 + faceVar * 1;
             snakeBody.y = *yPos - 2;
             snakeBody.w = 2;
             snakeBody.h = 1;
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Oko
+            //Snakes eye.
             snakeBody.x = *xPos + 3 + faceVar * 2;
             snakeBody.y = *yPos + 1;
             snakeBody.w = 2;
@@ -142,7 +165,7 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Paszcza
+            //Snakes mouth.
             snakeBody.x = *xPos + 2 - faceVar * 2;
             snakeBody.y = *yPos;
             snakeBody.w = 4;
@@ -159,7 +182,7 @@ void Snake::show() {
 			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
 				    128));
 	    
-            //Oko
+            //Snakes eye.
             snakeBody.x = *xPos + 3 + faceVar * 2;
             snakeBody.y = *yPos + 1;
             snakeBody.w = 2;
@@ -167,7 +190,7 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Paszcza
+            //Snakes mouth.
             snakeBody.x = *xPos + 2 - faceVar * 2;
             snakeBody.y = *yPos + 3;
             snakeBody.w = 4;
@@ -188,24 +211,24 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
 				    128));
-	    
-            //Nadglowie duze
-            snakeBody.x = *xPos - 2;
+
+            //Bigger piece of snakes head.
+	    snakeBody.x = *xPos - 2;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-	    
-            //Nadglowie male
-            snakeBody.x = *xPos - 2;
+
+	    //Smaller piece of snakes head.
+	    snakeBody.x = *xPos - 2;
             snakeBody.y = *yPos + faceVar;
             snakeBody.w = 1;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Oko
+            //Snakes eye.
             snakeBody.x = *xPos + 1;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
@@ -213,7 +236,7 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Paszcza
+            //Snakes mouth.
             snakeBody.x = *xPos;
             snakeBody.y = *yPos - 1 - faceVar * 2;
             snakeBody.w = 4;
@@ -221,7 +244,7 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
         } else {
-            //Wypelnienie glowy
+	    
             snakeBody.x = *xPos;
             snakeBody.y = *yPos - 3;
             snakeBody.w = 5;
@@ -230,7 +253,7 @@ void Snake::show() {
 			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
 				    128));
 	    
-            //Oko
+            //Snakes eye.
             snakeBody.x = *xPos + 1;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
@@ -238,7 +261,7 @@ void Snake::show() {
             SDL_FillRect(screen, &snakeBody,
 			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 	    
-            //Paszcza
+            //Snakes mouth.
             snakeBody.x = *xPos + 3;
             snakeBody.y = *yPos - 1 - faceVar * 2;
             snakeBody.w = 1;
@@ -255,6 +278,15 @@ void Snake::get_position(int* x, int* y) {
     *y = *yPos;
 }
 
+/*
+  Function grow handles the event of eating a block of food.
+
+  First, memory for a longer snake is allocated, then the old positions
+  are copied there. The new block of snake gets the same position as
+  the last block of old snake.
+
+  Finally, the old snake is deleted.
+*/
 void Snake::grow() {
     length++;
     
@@ -286,6 +318,10 @@ int Snake::get_dir() {
     return this->direction;
 }
 
+/*
+  Function mouth_open decides when to open snakes mouth. It opens when
+  snakes head approaches a piece of food.
+*/
 void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
 		       int yFood) {
     switch (direction) {
