@@ -13,17 +13,17 @@
   right.
 */
 Snake::Snake() {
-    w = 5;
-    h = 5;
+    w = SNAKE_CELL_SIZE;
+    h = SNAKE_CELL_SIZE;
     open = false;
     faceVar = -1;
     length = SNAKE_LENGTH;
-    velocity = SNAKE_VELOCITY;
+    velocity = SNAKE_CELL_SIZE + SNAKE_CELL_SEPARATION;
     xPos = new int[length];
     yPos = new int[length];
     for (int i = 0; i < length; i++) {
-        *(xPos + i) = 318;
-        *(yPos + i) = 240;
+        *(xPos+i) = 0.5*SCREEN_WIDTH - (((int)(0.5*SCREEN_WIDTH)) % velocity);
+        *(yPos+i) = 0.5*SCREEN_HEIGHT - (((int)(0.5*SCREEN_HEIGHT)) % velocity);
     }
     xVel = velocity;
     yVel = 0;
@@ -102,14 +102,14 @@ void Snake::move() {
     if (*xPos >= SCREEN_WIDTH)
         *xPos = 0;
     else if (*xPos < 0)
-        *xPos = SCREEN_WIDTH - 4;
+        *xPos = SCREEN_WIDTH - (SCREEN_WIDTH % velocity) + xVel;
     else
         *xPos += xVel;
     
     if (*yPos >= SCREEN_HEIGHT)
         *yPos = 0;
     else if (*yPos < 0)
-        *yPos = SCREEN_HEIGHT + yVel;
+        *yPos = SCREEN_HEIGHT - (SCREEN_HEIGHT % velocity) + yVel;
     else
         *yPos += yVel;
 }

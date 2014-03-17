@@ -6,6 +6,7 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const int SNAKE_LENGTH = 25;
-const int SNAKE_VELOCITY = 6;
+const int SNAKE_CELL_SIZE = 5;
+const int SNAKE_CELL_SEPARATION = 1;
 
 #endif
