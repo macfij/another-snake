@@ -73,14 +73,14 @@ void Snake::move() {
         *(xPos + i) = *(xPos + i - 1);
         *(yPos + i) = *(yPos + i - 1);
     }
-
+    
     if (*xPos >= SCREEN_WIDTH)
         *xPos = 0;
     else if (*xPos < 0)
         *xPos = SCREEN_WIDTH - 4;
     else
         *xPos += xVel;
-
+    
     if (*yPos >= SCREEN_HEIGHT)
         *yPos = 0;
     else if (*yPos < 0)
@@ -90,89 +90,90 @@ void Snake::move() {
 }
 
 void Snake::show() {
-
+    
     for (int i = 1; i < length; i++) {
         snakeBody.x = *(xPos + i);
         snakeBody.y = *(yPos + i);
         snakeBody.w = w;
         snakeBody.h = h;
         SDL_FillRect(screen, &snakeBody,
-                SDL_MapRGB(screen->format, (*(xPos + i) % 255),
-                        (*(yPos + i) % 255), 128));
+		     SDL_MapRGB(screen->format, (*(xPos + i) % 255),
+				(*(yPos + i) % 255), 128));
     }
     // OPCJA 2.5
     // to nowy tekst w ramach testu!
+    // AUTO-ustawianie TEST.
     if (xVel != 0) {
         if (xVel >= 0)
             faceVar = -1;
         else
             faceVar = 1;
         if (open) {
-
+	    
             snakeBody.x = *xPos;
             snakeBody.y = *yPos - 2;
             snakeBody.w = 8;
             snakeBody.h = 7;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
-                            128));
-
+			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
+				    128));
+	    
             //Nadglowie duze
             snakeBody.x = *xPos + 3 + faceVar * 3;
             snakeBody.y = *yPos - 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Nadglowie male
             snakeBody.x = *xPos + 3 + faceVar * 1;
             snakeBody.y = *yPos - 2;
             snakeBody.w = 2;
             snakeBody.h = 1;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Oko
             snakeBody.x = *xPos + 3 + faceVar * 2;
             snakeBody.y = *yPos + 1;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Paszcza
             snakeBody.x = *xPos + 2 - faceVar * 2;
             snakeBody.y = *yPos;
             snakeBody.w = 4;
             snakeBody.h = 4;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
         } else {
             snakeBody.x = *xPos;
             snakeBody.y = *yPos;
             snakeBody.w = 8;
             snakeBody.h = 5;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
-                            128));
-
+			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
+				    128));
+	    
             //Oko
             snakeBody.x = *xPos + 3 + faceVar * 2;
             snakeBody.y = *yPos + 1;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Paszcza
             snakeBody.x = *xPos + 2 - faceVar * 2;
             snakeBody.y = *yPos + 3;
             snakeBody.w = 4;
             snakeBody.h = 1;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
         }
     } else {
         if (yVel >= 0)
@@ -185,40 +186,40 @@ void Snake::show() {
             snakeBody.w = 7;
             snakeBody.h = 8;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
-                            128));
-
+			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
+				    128));
+	    
             //Nadglowie duze
             snakeBody.x = *xPos - 2;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Nadglowie male
             snakeBody.x = *xPos - 2;
             snakeBody.y = *yPos + faceVar;
             snakeBody.w = 1;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Oko
             snakeBody.x = *xPos + 1;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Paszcza
             snakeBody.x = *xPos;
             snakeBody.y = *yPos - 1 - faceVar * 2;
             snakeBody.w = 4;
             snakeBody.h = 4;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
         } else {
             //Wypelnienie glowy
             snakeBody.x = *xPos;
@@ -226,27 +227,27 @@ void Snake::show() {
             snakeBody.w = 5;
             snakeBody.h = 8;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
-                            128));
-
+			 SDL_MapRGB(screen->format, (*xPos % 255), (*yPos % 255),
+				    128));
+	    
             //Oko
             snakeBody.x = *xPos + 1;
             snakeBody.y = *yPos + faceVar * 2;
             snakeBody.w = 2;
             snakeBody.h = 2;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    
             //Paszcza
             snakeBody.x = *xPos + 3;
             snakeBody.y = *yPos - 1 - faceVar * 2;
             snakeBody.w = 1;
             snakeBody.h = 4;
             SDL_FillRect(screen, &snakeBody,
-                    SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
         }
     }
-
+    
 }
 
 void Snake::get_position(int* x, int* y) {
@@ -256,23 +257,23 @@ void Snake::get_position(int* x, int* y) {
 
 void Snake::grow() {
     length++;
-
+    
     int* xOld = xPos;
     int* yOld = yPos;
-
+    
     int* xNew = new int[length];
     int* yNew = new int[length];
-
+    
     for (int i = 0; i < length - 1; i++) {
         *(xNew + i) = *(xPos + i);
         *(yNew + i) = *(yPos + i);
     }
     *(xNew + length - 1) = *(xNew + length - 2);
     *(yNew + length - 1) = *(yNew + length - 2);
-
+    
     xPos = xNew;
     yPos = yNew;
-
+    
     delete[] xOld;
     delete[] yOld;
 }
@@ -286,7 +287,7 @@ int Snake::get_dir() {
 }
 
 void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
-        int yFood) {
+		       int yFood) {
     switch (direction) {
     case UP:
         if (xFood - 1 == xSnake) {
