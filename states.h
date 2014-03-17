@@ -7,46 +7,48 @@
 #include "snake.h"
 #include "pokarm.h"
 
-class GameState{
+class GameState {
 public:
-	virtual ~GameState(){};
-	virtual void logic() = 0;
-	virtual void render() = 0;
-	virtual void handle_events() = 0;
+    virtual ~GameState() {
+    }
+    ;
+    virtual void logic() = 0;
+    virtual void render() = 0;
+    virtual void handle_events() = 0;
 };
 
-class Intro : public GameState{
+class Intro: public GameState {
 public:
-	Intro();
-	~Intro();
-	void logic();
-	void render();
-	void handle_events();
+    Intro();
+    ~Intro();
+    void logic();
+    void render();
+    void handle_events();
 private:
-	SDL_Surface* background;
+    SDL_Surface* background;
 };
 
-class Play : public GameState{
+class Play: public GameState {
 public:
-	Play();
-	~Play();
-	void logic();
-	void render();
-	void handle_events();
+    Play();
+    ~Play();
+    void logic();
+    void render();
+    void handle_events();
 private:
-		Snake moj;
-		Pokarm jedzenie;
+    Snake moj;
+    Pokarm jedzenie;
 };
 
-class Lose : public GameState{
+class Lose: public GameState {
 public:
-	Lose();
-	~Lose();
-	void logic();
-	void render();
-	void handle_events();
+    Lose();
+    ~Lose();
+    void logic();
+    void render();
+    void handle_events();
 private:
-	SDL_Surface* background;
+    SDL_Surface* background;
 };
 
 #endif

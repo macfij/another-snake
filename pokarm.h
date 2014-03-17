@@ -3,18 +3,17 @@
 
 #include "SDL/SDL.h"
 
-class Pokarm
-{
+class Pokarm {
 private:
-  SDL_Rect point;
-  int xPos;
-  int yPos;
-  int w, h;
+    SDL_Rect point;
+    int xPos;
+    int yPos;
+    int w, h;
 
 public:
-  Pokarm();
-  void get_position(int*,int*);
-  void reset_position();
-  void show();
+    Pokarm();
+    void get_position(int*, int*);
+    void reset_position();
+    void show();
 };
 #endif
