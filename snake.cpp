@@ -49,32 +49,40 @@ void Snake::handle_input() {
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
         case SDLK_w:
-            direction = UP;
-            if (yVel == 0) {
-                yVel = -velocity;
+            if ( xPos[0] != xPos[1]) {
+                direction = UP;
+                if (yVel == 0) {
+                    yVel = -velocity;
+                }
+                xVel = 0;
             }
-            xVel = 0;
             break;
         case SDLK_s:
-            direction = DOWN;
-            if (yVel == 0) {
-                yVel = +velocity;
+            if ( xPos[0] != xPos[1]) {
+                direction = DOWN;
+                if (yVel == 0) {
+                    yVel = +velocity;
+                }
+                xVel = 0;
             }
-            xVel = 0;
             break;
         case SDLK_a:
-            direction = LEFT;
-            if (xVel == 0) {
-                xVel = -velocity;
+            if (yPos[0] != yPos[1]) {
+                direction = LEFT;
+                if (xVel == 0) {
+                    xVel = -velocity;
+                }
+                yVel = 0;
             }
-            yVel = 0;
             break;
         case SDLK_d:
-            direction = RIGHT;
-            if (xVel == 0) {
-                xVel = +velocity;
+            if (yPos[0] != yPos[1]) {
+                direction = RIGHT;
+                if (xVel == 0) {
+                    xVel = +velocity;
+                }
+                yVel = 0;
             }
-            yVel = 0;
             break;
         case SDLK_f:
             open = !open;
