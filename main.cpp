@@ -9,6 +9,10 @@
 #include "states.h"
 #include <string>
 #include <iostream>
+#include "SDL/SDL_ttf.h"
+#include <string.h>
+#include <stdlib.h>
+
 
 GameState* currState;
 
@@ -17,7 +21,6 @@ void change_state() {
         if (nextState != EXIT_STATE) {
             delete currState;
         }
-
         switch (nextState) {
         case PLAY_STATE:
             currState = new Play();
@@ -25,8 +28,13 @@ void change_state() {
         case LOSE_STATE:
             currState = new Lose();
             break;
+        case ENTRY_SCORE_STATE:
+            currState = new EnterScore();
+            break;
+        case HIGH_SCORES_STATE:
+            currState = new ShowHighScores();
+            break;
         }
-
         state = nextState;
         nextState = NULL_STATE;
     }
@@ -55,7 +63,6 @@ int main(int argc, char* args[]) {
         currState->logic();
         change_state();
         currState->render();
-
         if (SDL_Flip(screen) == -1) {
             return 1;
         }

@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "snake.h"
 #include "pokarm.h"
+#include <string>
 
 class GameState {
 public:
@@ -51,4 +52,30 @@ private:
     SDL_Surface* background;
 };
 
+class EnterScore: public GameState {
+public:
+    EnterScore();
+    ~EnterScore();
+    void logic();
+    void render();
+    void handle_events();
+private:
+    SDL_Surface* background;
+    SDL_Surface* message;
+    SDL_Surface* name;
+    std::string nameContainer;
+};
+
+class ShowHighScores: public GameState {
+public:
+    ShowHighScores();
+    ~ShowHighScores();
+    void logic();
+    void render();
+    void handle_events();
+private:
+    SDL_Surface* background;
+    SDL_Surface* entries[10];
+    SDL_Surface* message;
+};
 #endif

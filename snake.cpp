@@ -339,6 +339,7 @@ void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
                 mouth_change_state(true);
             }
         }
+        else mouth_change_state(false);
         break;
     case DOWN:
         if (xFood - 1 == xSnake) {
@@ -346,6 +347,7 @@ void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
                 mouth_change_state(true);
             }
         }
+        else mouth_change_state(false);
         break;
     case LEFT:
         if (yFood - 1 == ySnake) {
@@ -353,6 +355,7 @@ void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
                 mouth_change_state(true);
             }
         }
+        else mouth_change_state(false);
         break;
     case RIGHT:
         if (yFood - 1 == ySnake) {
@@ -360,5 +363,7 @@ void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
                 mouth_change_state(true);
             }
         }
+        else mouth_change_state(false);
+        break;
     }
 }
