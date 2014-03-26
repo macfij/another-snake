@@ -73,9 +73,19 @@ Play::Play() {
     xFoodPos = &xFood;
     yFoodPos = &yFood;
     handle_high_scores();
+    pauseBackground = load_Image("images/background.png");
+    pauseEntries[0].color = focusOnColor;
+    pauseEntries[0].entry = NULL;
+    pauseEntries[0].isFocused = true;
+    pauseEntries[0].msg = "CONTINUE";
+    pauseEntries[1].color = scoreColor;
+    pauseEntries[1].entry = NULL;
+    pauseEntries[1].isFocused = false;
+    pauseEntries[1].msg = "Exit";
 }
 
 Play::~Play() {
+    SDL_FreeSurface(pauseBackground);
 }
 
 void Play::handle_events() {
@@ -84,11 +94,59 @@ void Play::handle_events() {
         if (event.type == SDL_QUIT) {
             nextState = EXIT_STATE;
         }
+        if (paused == true) {
+            if (event.type == SDL_KEYDOWN) {
+                switch (pause_focus()) {
+                case 1:
+                    if (event.key.keysym.sym == SDLK_RETURN) {
+                        paused = false;
+                    }
+                    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                        SDL_FreeSurface(pauseEntries[0].entry);
+                        SDL_FreeSurface(pauseEntries[1].entry);
+                        pauseEntries[0].msg = "Continue";
+                        pauseEntries[1].msg = "EXIT";
+                        pauseEntries[0].isFocused = false;
+                        pauseEntries[0].color = scoreColor;
+                        pauseEntries[1].isFocused = true;
+                        pauseEntries[1].color = focusOnColor;
+                    }
+                    break;
+                case 0:
+                    if (event.key.keysym.sym == SDLK_RETURN) {
+                        nextState = EXIT_STATE;
+                    }
+                    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_UP) {
+                        SDL_FreeSurface(pauseEntries[0].entry);
+                        SDL_FreeSurface(pauseEntries[1].entry);
+                        pauseEntries[0].msg = "CONTINUE";
+                        pauseEntries[1].msg = "Exit";
+                        pauseEntries[0].isFocused = true;
+                        pauseEntries[0].color = focusOnColor;
+                        pauseEntries[1].isFocused = false;
+                        pauseEntries[1].color = scoreColor;
+                    }
+                    break;
+                }
+
+            }
+        }
+    }
+}
+
+int Play::pause_focus() {
+    if (pauseEntries[0].isFocused == true) {
+        return 1;
+    }
+    else {
+        return 0;
     }
 }
 
 void Play::logic() {
-    moj.move();
+    if (paused == false) {
+        moj.move();
+    }
     SDL_FillRect(screen, &screen->clip_rect,
             SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
     jedzenie.get_position(xFoodPos, yFoodPos);
@@ -115,14 +173,25 @@ void Play::logic() {
 }
 
 void Play::render() {
-    const char* c = (const char*)convert_int_to_char(score);
-    viewScore = TTF_RenderText_Solid(font, c, scoreColor);
-//    if (viewScore == NULL) {
-//        std::cout
-//    }
-    apply_surface(280, 20, viewScore, screen);
-    moj.show();
-    jedzenie.show();
+    if (paused == true) {
+        apply_surface(0,0, pauseBackground, screen);
+        pauseEntries[0].entry = TTF_RenderText_Solid(font, pauseEntries[0].msg, pauseEntries[0].color);
+        pauseEntries[1].entry = TTF_RenderText_Solid(font, pauseEntries[1].msg, pauseEntries[1].color);
+        if (pauseEntries[0].entry != NULL) {
+            apply_surface((SCREEN_WIDTH - pauseEntries[0].entry->w) / 2,
+                    ((SCREEN_HEIGHT - pauseEntries[0].entry->h) / 2) - 10, pauseEntries[0].entry, screen);
+        }
+        if (pauseEntries[1].entry != NULL) {
+            apply_surface((SCREEN_WIDTH - pauseEntries[1].entry->w) / 2,
+                    ((SCREEN_HEIGHT - pauseEntries[1].entry->h) / 2) + 10, pauseEntries[1].entry, screen);
+        }
+    }
+    else if (paused == false) {
+        viewScore = TTF_RenderText_Solid(font, convert_int_to_char(score, buffer), scoreColor);
+        apply_surface(280, 20, viewScore, screen);
+        moj.show();
+        jedzenie.show();
+    }
 }
 
 EnterScore::EnterScore() {
@@ -187,6 +256,7 @@ void EnterScore::render() {
 ShowHighScores::ShowHighScores() {
     background = load_Image("images/background.png");
     message = NULL;
+    playAgain = NULL;
     for (int i = 0; i < 10; i++) {
         entries[i] = NULL;
     }
@@ -211,21 +281,26 @@ void ShowHighScores::handle_events() {
             if (event.key.keysym.sym == SDLK_SPACE) {
                 nextState = PLAY_STATE;
             }
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+                nextState = EXIT_STATE;
+            }
         }
     }
 }
 
 void ShowHighScores::render() {
     message = TTF_RenderText_Solid(font, "High Scores", scoreColor);
+    playAgain = TTF_RenderText_Solid(font, "Press spacebar to play again", scoreColor);
     apply_surface(0, 0, background, screen);
-    apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
+    apply_surface((SCREEN_WIDTH - message->w) / 2, (((SCREEN_HEIGHT / 2) - message->h) / 2) - 70, message, screen);
+    apply_surface(200, 400, playAgain, screen);
 
 
 
     for (int i = 0; i < 10; i++) {
         entries[i] = TTF_RenderText_Solid(font, scoresToView[i].c_str(), scoreColor);
         if (entries[i] != NULL) {
-            apply_surface(100, 200+(i*20), entries[i], screen);
+            apply_surface(100, 100+(i*20), entries[i], screen);
         }
     }
 }

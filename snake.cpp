@@ -86,6 +86,10 @@ void Snake::handle_input() {
             break;
         case SDLK_f:
             open = !open;
+            break;
+        case SDLK_ESCAPE:
+            paused = !(paused);
+            break;
         }
     }
 }

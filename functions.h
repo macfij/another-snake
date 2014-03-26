@@ -19,7 +19,7 @@ bool load_files();
 
 void clean_up();
 
-const char* convert_int_to_char(int x);
+const char* convert_int_to_char(int x, char buffer[]);
 
 int cmpfunc(const void* a, const void* b);
 

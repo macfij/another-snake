@@ -49,14 +49,12 @@ int main(int argc, char* args[]) {
         return 1;
     }
 
-    Timer fps;
-    Timer myTimer;
-
     currState = new Intro();
     state = INTRO_STATE;
 
+
+
     while (state != EXIT_STATE) {
-        myTimer.start();
         fps.start();
 
         currState->handle_events();
@@ -66,11 +64,9 @@ int main(int argc, char* args[]) {
         if (SDL_Flip(screen) == -1) {
             return 1;
         }
-
         if (fps.get_ticks() < 1000 / FRAMES_PER_SECOND) {
             SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
         }
-
     }
     clean_up();
     return 0;

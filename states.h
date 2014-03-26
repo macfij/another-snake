@@ -36,9 +36,12 @@ public:
     void logic();
     void render();
     void handle_events();
+    int pause_focus();
 private:
     Snake moj;
     Pokarm jedzenie;
+    SDL_Surface* pauseBackground;
+    menuEntry pauseEntries[2];
 };
 
 class Lose: public GameState {
@@ -77,5 +80,6 @@ private:
     SDL_Surface* background;
     SDL_Surface* entries[10];
     SDL_Surface* message;
+    SDL_Surface* playAgain;
 };
 #endif

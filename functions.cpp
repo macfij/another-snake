@@ -7,6 +7,7 @@
 #include "constants.h"
 #include "functions.h"
 #include "globals.h"
+#include <stdio.h>
 
 SDL_Surface *load_Image(std::string filename) {
     SDL_Surface* loadedImage = NULL;
@@ -77,12 +78,9 @@ void clean_up() {
     SDL_Quit();
 }
 
-const char* convert_int_to_char(int x) {
-    std::stringstream converted;
-    converted << "Score: "<< x;
-    std::string toReturn = converted.str();
-    const char* finally = (const char*)toReturn.c_str();
-    return finally;
+const char* convert_int_to_char(int x, char buffer[]) {
+    sprintf(buffer, "Score: %d", x);
+    return buffer;
 }
 
 int cmpfunc(const void* a, const void* b) {
