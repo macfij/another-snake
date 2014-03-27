@@ -3,6 +3,7 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_mixer.h"
 #include "globals.h"
 #include "snake.h"
 #include "pokarm.h"
@@ -42,6 +43,7 @@ private:
     Pokarm jedzenie;
     SDL_Surface* pauseBackground;
     menuEntry pauseEntries[2];
+    Mix_Chunk* eatSound;
 };
 
 class Lose: public GameState {

@@ -82,10 +82,14 @@ Play::Play() {
     pauseEntries[1].entry = NULL;
     pauseEntries[1].isFocused = false;
     pauseEntries[1].msg = "Exit";
+    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
+    eatSound = Mix_LoadWAV("sounds/eat.wav");
 }
 
 Play::~Play() {
     SDL_FreeSurface(pauseBackground);
+    Mix_FreeChunk(eatSound);
+    Mix_CloseAudio();
 }
 
 void Play::handle_events() {
@@ -159,6 +163,7 @@ void Play::logic() {
         jedzenie.reset_position();
         moj.grow();
         moj.mouth_change_state(false);
+        Mix_PlayChannel(-1, eatSound, 0);
     }
     if (moj.check_collision() == true) {
         if (score > highScores[9].score) {
