@@ -27,7 +27,29 @@ public:
     void render();
     void handle_events();
 private:
+    Mix_Music* music;
+    SDL_Surface* msgAnother;
+    SDL_Surface* msgSnake;
     SDL_Surface* background;
+    SDL_Surface* msgSpace;
+    int posCounter;
+    int spacebarCounter;
+
+};
+
+class Menu: public GameState {
+public:
+    Menu();
+    ~Menu();
+    void logic();
+    void render();
+    void handle_events();
+    int menu_focus();
+private:
+    menuEntry menuEntries[4];
+    SDL_Surface* background;
+    Mix_Chunk* switchSound;
+    Mix_Chunk* selectSound;
 };
 
 class Play: public GameState {
@@ -44,6 +66,8 @@ private:
     SDL_Surface* pauseBackground;
     menuEntry pauseEntries[2];
     Mix_Chunk* eatSound;
+    Mix_Chunk* switchSound;
+    Mix_Chunk* selectSound;
 };
 
 class Lose: public GameState {
@@ -55,6 +79,9 @@ public:
     void handle_events();
 private:
     SDL_Surface* background;
+    SDL_Surface* loseMsg;
+    SDL_Surface* pressMsg;
+    SDL_Surface* againMsg;
 };
 
 class EnterScore: public GameState {

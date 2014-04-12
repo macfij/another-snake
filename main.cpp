@@ -25,6 +25,9 @@ void change_state() {
         case PLAY_STATE:
             currState = new Play();
             break;
+        case MENU_STATE:
+            currState = new Menu();
+            break;
         case LOSE_STATE:
             currState = new Lose();
             break;

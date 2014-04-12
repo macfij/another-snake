@@ -10,6 +10,7 @@
 enum PossibleStates{
 	NULL_STATE,
 	INTRO_STATE,
+	MENU_STATE,
 	PLAY_STATE,
 	LOSE_STATE,
 	ENTRY_SCORE_STATE,
@@ -35,6 +36,7 @@ extern std::string scoresToView[10];
 extern SDL_Surface *screen;
 extern SDL_Event event;
 extern TTF_Font *font;
+extern TTF_Font *fontBigger;
 extern SDL_Surface *viewScore;
 extern SDL_Color scoreColor;
 extern SDL_Color focusOnColor;

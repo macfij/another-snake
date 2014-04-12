@@ -5,6 +5,7 @@
 SDL_Event event;
 SDL_Surface *screen = NULL;
 TTF_Font *font = NULL;
+TTF_Font *fontBigger = NULL;
 SDL_Surface *viewScore = NULL;
 SDL_Color scoreColor = {0, 255, 0, 0};
 SDL_Color focusOnColor = {255, 255, 255};

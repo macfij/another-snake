@@ -1,6 +1,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -51,15 +52,16 @@ bool init() {
     if (TTF_Init() == -1) {
         return false;
     }
-    SDL_WM_SetCaption("Wonsz apgrejded", NULL);
+    SDL_WM_SetCaption("Another Snake", NULL);
     return true;
 }
 
 bool load_files() {
-    font = TTF_OpenFont("fonts/DejaVuSansMono.ttf", 20);
+    font = TTF_OpenFont("fonts/Munro.ttf", 25);
     if (font == NULL) {
         return false;
     }
+    fontBigger = TTF_OpenFont("fonts/Munro.ttf", 45);
     /* ***do Opcji 3***
      opened_mouth = load_Image("opened_mouth.png");
      if(opened_mouth == NULL) return false;
@@ -75,6 +77,7 @@ void clean_up() {
      SDL_FreeSurface(closed_mouth);
      */
     TTF_CloseFont(font);
+    Mix_CloseAudio();
     SDL_Quit();
 }
 
