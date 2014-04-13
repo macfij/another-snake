@@ -16,6 +16,7 @@ int *xSnakePos, *ySnakePos;
 int score = 0;
 int frame = 0;
 bool cap = true;
+bool wasMenu = false;
 
 int state = NULL_STATE;
 int nextState = NULL_STATE;

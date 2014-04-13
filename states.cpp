@@ -36,6 +36,9 @@ void Intro::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
+                if (spacebarCounter == 0 && posCounter == 100) {
+                    nextState = MENU_STATE;
+                }
                 spacebarCounter++;
             }
             if (spacebarCounter == 1) {
@@ -90,6 +93,8 @@ Menu::Menu() {
     menuEntries[3].entry = NULL;
     menuEntries[3].isFocused = false;
     menuEntries[3].color = scoreColor;
+    handle_high_scores();
+    update_high_scores();
 }
 
 Menu::~Menu() {
@@ -111,24 +116,22 @@ void Menu::handle_events() {
         if (event.type == SDL_KEYDOWN) {
             switch (menu_focus()) {
             case 0:
-                if (event.key.keysym.sym == SDLK_UP) {
-                    Mix_PlayChannel(-1, switchSound, 0);
+                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[0].entry);
-                    SDL_FreeSurface(menuEntries[3].entry);
-                    menuEntries[3].msg = "EXIT";
-                    menuEntries[3].isFocused = true;
-                    menuEntries[3].color = focusOnColor;
                     menuEntries[0].msg = "New Game";
                     menuEntries[0].isFocused = false;
                     menuEntries[0].color = scoreColor;
                 }
+                if (event.key.keysym.sym == SDLK_UP) {
+                    Mix_PlayChannel(-1, switchSound, 0);
+                    SDL_FreeSurface(menuEntries[3].entry);
+                    menuEntries[3].msg = "EXIT";
+                    menuEntries[3].isFocused = true;
+                    menuEntries[3].color = focusOnColor;
+                }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[0].entry);
                     SDL_FreeSurface(menuEntries[1].entry);
-                    menuEntries[0].msg = "New Game";
-                    menuEntries[0].isFocused = false;
-                    menuEntries[0].color = scoreColor;
                     menuEntries[1].msg = "OPTIONS";
                     menuEntries[1].isFocused = true;
                     menuEntries[1].color = focusOnColor;
@@ -140,24 +143,22 @@ void Menu::handle_events() {
                 }
                 break;
             case 1:
-                if (event.key.keysym.sym == SDLK_UP) {
-                    Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[0].entry);
+                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[1].entry);
                     menuEntries[1].msg = "Options";
                     menuEntries[1].isFocused = false;
                     menuEntries[1].color = scoreColor;
+                }
+                if (event.key.keysym.sym == SDLK_UP) {
+                    Mix_PlayChannel(-1, switchSound, 0);
+                    SDL_FreeSurface(menuEntries[0].entry);
                     menuEntries[0].msg = "NEW GAME";
                     menuEntries[0].color = focusOnColor;
                     menuEntries[0].isFocused = true;
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[1].entry);
                     SDL_FreeSurface(menuEntries[2].entry);
-                    menuEntries[1].msg = "Options";
-                    menuEntries[1].isFocused = false;
-                    menuEntries[1].color = scoreColor;
                     menuEntries[2].msg = "HIGH SCORES";
                     menuEntries[2].color = focusOnColor;
                     menuEntries[2].isFocused = true;
@@ -169,24 +170,22 @@ void Menu::handle_events() {
                 }
                 break;
             case 2:
-                if (event.key.keysym.sym == SDLK_UP) {
-                    Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[1].entry);
+                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[2].entry);
-                    menuEntries[1].msg = "OPTIONS";
-                    menuEntries[1].isFocused = true;
-                    menuEntries[1].color = focusOnColor;
                     menuEntries[2].msg = "High Scores";
                     menuEntries[2].color = scoreColor;
                     menuEntries[2].isFocused = false;
                 }
+                if (event.key.keysym.sym == SDLK_UP) {
+                    Mix_PlayChannel(-1, switchSound, 0);
+                    SDL_FreeSurface(menuEntries[1].entry);
+                    menuEntries[1].msg = "OPTIONS";
+                    menuEntries[1].isFocused = true;
+                    menuEntries[1].color = focusOnColor;
+                }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[2].entry);
                     SDL_FreeSurface(menuEntries[3].entry);
-                    menuEntries[2].msg = "High Scores";
-                    menuEntries[2].color = scoreColor;
-                    menuEntries[2].isFocused = false;
                     menuEntries[3].msg = "EXIT";
                     menuEntries[3].isFocused = true;
                     menuEntries[3].color = focusOnColor;
@@ -194,17 +193,20 @@ void Menu::handle_events() {
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     Mix_PlayChannel(-1, selectSound, 0);
                     SDL_Delay(300);
+                    wasMenu = true;
                     nextState = HIGH_SCORES_STATE;
                 }
                 break;
             case 3:
-                if (event.key.keysym.sym == SDLK_UP) {
-                    Mix_PlayChannel(-1, switchSound, 0);
-                    SDL_FreeSurface(menuEntries[2].entry);
+                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[3].entry);
                     menuEntries[3].msg = "Exit";
                     menuEntries[3].isFocused = false;
                     menuEntries[3].color = scoreColor;
+                }
+                if (event.key.keysym.sym == SDLK_UP) {
+                    Mix_PlayChannel(-1, switchSound, 0);
+                    SDL_FreeSurface(menuEntries[2].entry);
                     menuEntries[2].msg = "HIGH SCORES";
                     menuEntries[2].color = focusOnColor;
                     menuEntries[2].isFocused = true;
@@ -212,10 +214,6 @@ void Menu::handle_events() {
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     Mix_PlayChannel(-1, switchSound, 0);
                     SDL_FreeSurface(menuEntries[0].entry);
-                    SDL_FreeSurface(menuEntries[3].entry);
-                    menuEntries[3].msg = "Exit";
-                    menuEntries[3].isFocused = false;
-                    menuEntries[3].color = scoreColor;
                     menuEntries[0].msg = "NEW GAME";
                     menuEntries[0].color = focusOnColor;
                     menuEntries[0].isFocused = true;
@@ -325,10 +323,14 @@ Play::Play() {
     pauseEntries[0].entry = NULL;
     pauseEntries[0].isFocused = true;
     pauseEntries[0].msg = "CONTINUE";
+    pauseEntries[1].msg = "Main Menu";
     pauseEntries[1].color = scoreColor;
-    pauseEntries[1].entry = NULL;
     pauseEntries[1].isFocused = false;
-    pauseEntries[1].msg = "Exit";
+    pauseEntries[1].entry = NULL;
+    pauseEntries[2].color = scoreColor;
+    pauseEntries[2].entry = NULL;
+    pauseEntries[2].isFocused = false;
+    pauseEntries[2].msg = "Exit";
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     eatSound = Mix_LoadWAV("sounds/eat.wav");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
@@ -352,39 +354,82 @@ void Play::handle_events() {
         if (paused == true) {
             if (event.type == SDL_KEYDOWN) {
                 switch (pause_focus()) {
-                case 1:
+                case 2:  // main menu
+                    if (event.key.keysym.sym == SDLK_RETURN) {
+                        paused = false;
+                        Mix_PlayChannel(-1, selectSound, 0);
+                        SDL_Delay(300);
+                        nextState = MENU_STATE;
+                    }
+                    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                        SDL_FreeSurface(pauseEntries[1].entry);
+                        pauseEntries[1].msg = "Main Menu";
+                        pauseEntries[1].color = scoreColor;
+                        pauseEntries[1].isFocused = false;
+                        Mix_PlayChannel(-1, switchSound, 0);
+                    }
+                    if (event.key.keysym.sym == SDLK_DOWN) {
+                        SDL_FreeSurface(pauseEntries[2].entry);
+                        pauseEntries[2].msg = "EXIT";
+                        pauseEntries[2].color = focusOnColor;
+                        pauseEntries[2].isFocused = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_UP) {
+                        SDL_FreeSurface(pauseEntries[0].entry);
+                        pauseEntries[0].msg = "CONTINUE";
+                        pauseEntries[0].color = focusOnColor;
+                        pauseEntries[0].isFocused = true;
+                    }
+                    break;
+                case 1:  // continue
                     if (event.key.keysym.sym == SDLK_RETURN) {
                         Mix_PlayChannel(-1, selectSound, 0);
                         paused = false;
                     }
                     if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
                         SDL_FreeSurface(pauseEntries[0].entry);
-                        SDL_FreeSurface(pauseEntries[1].entry);
                         pauseEntries[0].msg = "Continue";
-                        pauseEntries[1].msg = "EXIT";
                         pauseEntries[0].isFocused = false;
                         pauseEntries[0].color = scoreColor;
-                        pauseEntries[1].isFocused = true;
-                        pauseEntries[1].color = focusOnColor;
                         Mix_PlayChannel(-1, switchSound, 0);
                     }
+                    if (event.key.keysym.sym == SDLK_DOWN) {
+                        SDL_FreeSurface(pauseEntries[1].entry);
+                        pauseEntries[1].msg = "MAIN MENU";
+                        pauseEntries[1].color = focusOnColor;
+                        pauseEntries[1].isFocused = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_UP) {
+                        SDL_FreeSurface(pauseEntries[2].entry);
+                        pauseEntries[2].msg = "EXIT";
+                        pauseEntries[2].color = focusOnColor;
+                        pauseEntries[2].isFocused = true;
+                    }
                     break;
-                case 0:
+                case 0:  // exit
                     if (event.key.keysym.sym == SDLK_RETURN) {
                         Mix_PlayChannel(-1, selectSound, 0);
                         SDL_Delay(300);
                         nextState = EXIT_STATE;
                     }
                     if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_UP) {
-                        SDL_FreeSurface(pauseEntries[0].entry);
-                        SDL_FreeSurface(pauseEntries[1].entry);
-                        pauseEntries[0].msg = "CONTINUE";
-                        pauseEntries[1].msg = "Exit";
-                        pauseEntries[0].isFocused = true;
-                        pauseEntries[0].color = focusOnColor;
-                        pauseEntries[1].isFocused = false;
-                        pauseEntries[1].color = scoreColor;
+                        SDL_FreeSurface(pauseEntries[2].entry);
+                        pauseEntries[2].msg = "Exit";
+                        pauseEntries[2].isFocused = false;
+                        pauseEntries[2].color = scoreColor;
                         Mix_PlayChannel(-1, switchSound, 0);
+                    }
+                    if (event.key.keysym.sym == SDLK_UP) {
+                        SDL_FreeSurface(pauseEntries[1].entry);
+                        pauseEntries[1].msg = "MAIN MENU";
+                        pauseEntries[1].color = focusOnColor;
+                        pauseEntries[1].isFocused = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_DOWN) {
+                        SDL_FreeSurface(pauseEntries[0].entry);
+                        pauseEntries[0].msg = "CONTINUE";
+                        pauseEntries[0].color = focusOnColor;
+                        pauseEntries[0].isFocused = true;
                     }
                     break;
                 }
@@ -395,6 +440,9 @@ void Play::handle_events() {
 }
 
 int Play::pause_focus() {
+    if (pauseEntries[1].isFocused == true) {
+        return 2;
+    }
     if (pauseEntries[0].isFocused == true) {
         return 1;
     }
@@ -438,6 +486,7 @@ void Play::render() {
         apply_surface(0,0, pauseBackground, screen);
         pauseEntries[0].entry = TTF_RenderText_Solid(font, pauseEntries[0].msg, pauseEntries[0].color);
         pauseEntries[1].entry = TTF_RenderText_Solid(font, pauseEntries[1].msg, pauseEntries[1].color);
+        pauseEntries[2].entry = TTF_RenderText_Solid(font, pauseEntries[2].msg, pauseEntries[2].color);
         if (pauseEntries[0].entry != NULL) {
             apply_surface((SCREEN_WIDTH - pauseEntries[0].entry->w) / 2,
                     ((SCREEN_HEIGHT - pauseEntries[0].entry->h) / 2) - 10, pauseEntries[0].entry, screen);
@@ -445,6 +494,10 @@ void Play::render() {
         if (pauseEntries[1].entry != NULL) {
             apply_surface((SCREEN_WIDTH - pauseEntries[1].entry->w) / 2,
                     ((SCREEN_HEIGHT - pauseEntries[1].entry->h) / 2) + 10, pauseEntries[1].entry, screen);
+        }
+        if (pauseEntries[2].entry != NULL) {
+            apply_surface((SCREEN_WIDTH - pauseEntries[2].entry->w) / 2,
+                    ((SCREEN_HEIGHT - pauseEntries[2].entry->h) / 2) + 30, pauseEntries[2].entry, screen);
         }
     }
     else if (paused == false) {
@@ -540,7 +593,12 @@ void ShowHighScores::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
-                nextState = PLAY_STATE;
+                if (wasMenu == false) {
+                    nextState = PLAY_STATE;
+                }
+                else if (wasMenu == true) {
+                    nextState = MENU_STATE;
+                }
             }
             if (event.key.keysym.sym == SDLK_ESCAPE) {
                 nextState = EXIT_STATE;
@@ -551,7 +609,12 @@ void ShowHighScores::handle_events() {
 
 void ShowHighScores::render() {
     message = TTF_RenderText_Solid(font, "High Scores", scoreColor);
-    playAgain = TTF_RenderText_Solid(font, "Press spacebar to play again", scoreColor);
+    if (wasMenu == false) {
+        playAgain = TTF_RenderText_Solid(font, "Press spacebar to play again", scoreColor);
+    }
+    else if (wasMenu == true) {
+        playAgain = TTF_RenderText_Solid(font, "Press spacebar to go back to main menu", scoreColor);
+    }
     apply_surface(0, 0, background, screen);
     apply_surface((SCREEN_WIDTH - message->w) / 2, (((SCREEN_HEIGHT / 2) - message->h) / 2) - 70, message, screen);
     apply_surface(200, 400, playAgain, screen);

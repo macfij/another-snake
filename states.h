@@ -64,7 +64,7 @@ private:
     Snake moj;
     Pokarm jedzenie;
     SDL_Surface* pauseBackground;
-    menuEntry pauseEntries[2];
+    menuEntry pauseEntries[3];
     Mix_Chunk* eatSound;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;

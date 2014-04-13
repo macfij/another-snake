@@ -48,6 +48,7 @@ extern int *xSnakePos, *ySnakePos;
 
 extern int frame;
 extern bool cap;
+extern bool wasMenu;
 
 extern int state;
 extern int nextState;
