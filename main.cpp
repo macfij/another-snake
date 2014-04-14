@@ -28,6 +28,9 @@ void change_state() {
         case MENU_STATE:
             currState = new Menu();
             break;
+        case OPTION_STATE:
+            currState = new Option();
+            break;
         case LOSE_STATE:
             currState = new Lose();
             break;

@@ -68,6 +68,20 @@ private:
     Mix_Chunk* eatSound;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
+    Mix_Chunk* deathSound;
+};
+
+class Option: public GameState {
+public:
+    Option();
+    ~Option();
+    void logic();
+    void render();
+    void handle_events();
+private:
+    SDL_Surface* background;
+    Mix_Chunk* switchSound;
+    Mix_Chunk* selectSound;
 };
 
 class Lose: public GameState {

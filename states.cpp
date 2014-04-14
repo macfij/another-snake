@@ -269,6 +269,29 @@ void Menu::render() {
     }
 }
 
+Option::Option() {
+    background = load_Image("images/background.png");
+    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
+    switchSound = Mix_LoadWAV("sounds/switch.wav");
+    selectSound = Mix_LoadWAV("sounds/selected.wav");
+}
+
+Option::~Option() {
+
+}
+
+void Option::logic() {
+
+}
+
+void Option::handle_events() {
+
+}
+
+void Option::render() {
+
+}
+
 Lose::Lose() {
     background = load_Image("images/background.png");
     loseMsg = NULL;
@@ -335,6 +358,7 @@ Play::Play() {
     eatSound = Mix_LoadWAV("sounds/eat.wav");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
+    deathSound = Mix_LoadWAV("sounds/death.wav");
 }
 
 Play::~Play() {
@@ -342,6 +366,7 @@ Play::~Play() {
     Mix_FreeChunk(eatSound);
     Mix_FreeChunk(switchSound);
     Mix_FreeChunk(selectSound);
+    Mix_FreeChunk(deathSound);
     Mix_CloseAudio();
 }
 
@@ -470,6 +495,8 @@ void Play::logic() {
         Mix_PlayChannel(-1, eatSound, 0);
     }
     if (moj.check_collision() == true) {
+        Mix_PlayChannel(-1, deathSound, 0);
+        SDL_Delay(300);
         if (score > highScores[9].score) {
             highScores[9].score = score;
             nextState = ENTRY_SCORE_STATE;
