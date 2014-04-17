@@ -36,13 +36,13 @@ void Intro::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
-                if (spacebarCounter == 0 && posCounter == 100) {
+                if (spacebarCounter == 0 && posCounter == (SCREEN_WIDTH/float(6.4))) {
                     nextState = MENU_STATE;
                 }
                 spacebarCounter++;
             }
             if (spacebarCounter == 1) {
-                posCounter = 100;
+                posCounter = (SCREEN_WIDTH/float(6.4));
             }
             if (spacebarCounter == 2) {
                 nextState = MENU_STATE;
@@ -55,7 +55,7 @@ void Intro::logic() {
     if (Mix_PlayingMusic() == 0) {
         Mix_PlayMusic(music, 1);
     }
-    if (posCounter != 100) {
+    if (posCounter != (SCREEN_WIDTH/float(6.4))) {
         posCounter--;
     }
 }
@@ -64,11 +64,12 @@ void Intro::render() {
     msgAnother = TTF_RenderText_Solid(font, "Another", scoreColor);
     msgSnake = TTF_RenderText_Solid(fontBigger, "SNAKE", scoreColor);
     msgSpace = TTF_RenderText_Solid(font, "Press Spacebar", scoreColor);
-    apply_surface(0, 0, background, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     apply_surface((SCREEN_WIDTH - msgAnother->w) / 2, posCounter, msgAnother, screen);
-    apply_surface((SCREEN_WIDTH - msgSnake->w) / 2, posCounter+20, msgSnake, screen);
-    if (posCounter == 100) {
-        apply_surface((SCREEN_WIDTH - msgSpace->w) / 2, 400, msgSpace, screen);
+    apply_surface((SCREEN_WIDTH - msgSnake->w) / 2, posCounter + (SCREEN_WIDTH/float(32)), msgSnake, screen);
+    if (posCounter == (SCREEN_WIDTH/float(6.4))) {
+        apply_surface((SCREEN_WIDTH - msgSpace->w) / 2, (SCREEN_WIDTH/float(1.6)), msgSpace, screen);
     }
 }
 
@@ -250,14 +251,15 @@ void Menu::render() {
     menuEntries[1].entry = TTF_RenderText_Solid(font, menuEntries[1].msg, menuEntries[1].color);
     menuEntries[2].entry = TTF_RenderText_Solid(font, menuEntries[2].msg, menuEntries[2].color);
     menuEntries[3].entry = TTF_RenderText_Solid(font, menuEntries[3].msg, menuEntries[3].color);
-    apply_surface(0, 0, background, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                    SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     if (menuEntries[0].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[0].entry->w) / 2,
-                    ((SCREEN_HEIGHT - menuEntries[0].entry->h) / 2) - 40, menuEntries[0].entry, screen);
+                    ((SCREEN_HEIGHT - menuEntries[0].entry->h) / 2) - (SCREEN_WIDTH/float(16)), menuEntries[0].entry, screen);
     }
     if (menuEntries[1].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[1].entry->w) / 2,
-                    ((SCREEN_HEIGHT - menuEntries[1].entry->h) / 2) - 20, menuEntries[1].entry, screen);
+                    ((SCREEN_HEIGHT - menuEntries[1].entry->h) / 2) - (SCREEN_WIDTH/float(32)), menuEntries[1].entry, screen);
     }
     if (menuEntries[2].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[2].entry->w) / 2,
@@ -265,7 +267,7 @@ void Menu::render() {
     }
     if (menuEntries[3].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[3].entry->w) / 2,
-                    ((SCREEN_HEIGHT - menuEntries[3].entry->h) / 2) + 20, menuEntries[3].entry, screen);
+                    ((SCREEN_HEIGHT - menuEntries[3].entry->h) / 2) + (SCREEN_WIDTH/float(32)), menuEntries[3].entry, screen);
     }
 }
 
@@ -313,10 +315,11 @@ void Lose::render() {
     loseMsg = TTF_RenderText_Solid(fontBigger, "YOU LOSE!", scoreColor);
     pressMsg = TTF_RenderText_Solid(font, "Press Spacebar", scoreColor);
     againMsg = TTF_RenderText_Solid(font, "to play again", scoreColor);
-    apply_surface(0, 0, background, screen);
-    apply_surface((SCREEN_WIDTH - loseMsg->w) / 2, 100, loseMsg, screen);
-    apply_surface((SCREEN_WIDTH - pressMsg->w) / 2, 150, pressMsg, screen);
-    apply_surface((SCREEN_WIDTH - againMsg->w) / 2, 170, againMsg, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                    SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
+    apply_surface((SCREEN_WIDTH - loseMsg->w) / 2, (SCREEN_WIDTH/float(6.4)), loseMsg, screen);
+    apply_surface((SCREEN_WIDTH - pressMsg->w) / 2, (SCREEN_WIDTH/float(4.25)), pressMsg, screen);
+    apply_surface((SCREEN_WIDTH - againMsg->w) / 2, (SCREEN_WIDTH/float(3.7)), againMsg, screen);
 }
 
 void Lose::handle_events() {
@@ -486,8 +489,8 @@ void Play::logic() {
     moj.get_position(xSnakePos, ySnakePos);
     moj.mouth_open(moj.get_dir(), xSnake, ySnake, xFood, yFood);
 
-    if (((xFood >= xSnake) && (xFood <= xSnake + 5))
-            && ((yFood >= ySnake) && (yFood <= ySnake + 5))) {
+    if (((xFood >= xSnake) && (xFood <= xSnake + SNAKE_CELL_SIZE))
+            && ((yFood >= ySnake) && (yFood <= ySnake + SNAKE_CELL_SIZE))) {
         score += 5;
         jedzenie.reset_position();
         moj.grow();
@@ -510,26 +513,27 @@ void Play::logic() {
 
 void Play::render() {
     if (paused == true) {
-        apply_surface(0,0, pauseBackground, screen);
+        SDL_FillRect(screen, &screen->clip_rect,
+                        SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
         pauseEntries[0].entry = TTF_RenderText_Solid(font, pauseEntries[0].msg, pauseEntries[0].color);
         pauseEntries[1].entry = TTF_RenderText_Solid(font, pauseEntries[1].msg, pauseEntries[1].color);
         pauseEntries[2].entry = TTF_RenderText_Solid(font, pauseEntries[2].msg, pauseEntries[2].color);
         if (pauseEntries[0].entry != NULL) {
             apply_surface((SCREEN_WIDTH - pauseEntries[0].entry->w) / 2,
-                    ((SCREEN_HEIGHT - pauseEntries[0].entry->h) / 2) - 10, pauseEntries[0].entry, screen);
+                    ((SCREEN_HEIGHT - pauseEntries[0].entry->h) / 2) - (SCREEN_WIDTH/float(64)), pauseEntries[0].entry, screen);
         }
         if (pauseEntries[1].entry != NULL) {
             apply_surface((SCREEN_WIDTH - pauseEntries[1].entry->w) / 2,
-                    ((SCREEN_HEIGHT - pauseEntries[1].entry->h) / 2) + 10, pauseEntries[1].entry, screen);
+                    ((SCREEN_HEIGHT - pauseEntries[1].entry->h) / 2) + (SCREEN_WIDTH/float(64)), pauseEntries[1].entry, screen);
         }
         if (pauseEntries[2].entry != NULL) {
             apply_surface((SCREEN_WIDTH - pauseEntries[2].entry->w) / 2,
-                    ((SCREEN_HEIGHT - pauseEntries[2].entry->h) / 2) + 30, pauseEntries[2].entry, screen);
+                    ((SCREEN_HEIGHT - pauseEntries[2].entry->h) / 2) + (SCREEN_WIDTH/float(21)), pauseEntries[2].entry, screen);
         }
     }
     else if (paused == false) {
         viewScore = TTF_RenderText_Solid(font, convert_int_to_char(score, buffer), scoreColor);
-        apply_surface(280, 20, viewScore, screen);
+        apply_surface((SCREEN_WIDTH/float(2.3)), (SCREEN_WIDTH/float(32)), viewScore, screen);
         moj.show();
         jedzenie.show();
     }
@@ -587,10 +591,11 @@ void EnterScore::handle_events() {
 
 void EnterScore::render() {
     message = TTF_RenderText_Solid(font, "New high score! enter name:", scoreColor);
-    apply_surface(0, 0, background, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                    SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
     if (name != NULL) {
-        apply_surface((SCREEN_WIDTH - name->w) / 2, (((SCREEN_HEIGHT / 2) - name->h) / 2)+100, name, screen);
+        apply_surface((SCREEN_WIDTH - name->w) / 2, (((SCREEN_HEIGHT / 2) - name->h) / 2) + (SCREEN_WIDTH/float(6.4)), name, screen);
     }
 }
 
@@ -642,16 +647,17 @@ void ShowHighScores::render() {
     else if (wasMenu == true) {
         playAgain = TTF_RenderText_Solid(font, "Press spacebar to go back to main menu", scoreColor);
     }
-    apply_surface(0, 0, background, screen);
-    apply_surface((SCREEN_WIDTH - message->w) / 2, (((SCREEN_HEIGHT / 2) - message->h) / 2) - 70, message, screen);
-    apply_surface(200, 400, playAgain, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                    SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
+    apply_surface((SCREEN_WIDTH - message->w) / 2, (((SCREEN_HEIGHT / 2) - message->h) / 2) - (SCREEN_WIDTH/float(9)), message, screen);
+    apply_surface((SCREEN_WIDTH/float(3.2)), (SCREEN_WIDTH/float(1.6)), playAgain, screen);
 
 
 
     for (int i = 0; i < 10; i++) {
         entries[i] = TTF_RenderText_Solid(font, scoresToView[i].c_str(), scoreColor);
         if (entries[i] != NULL) {
-            apply_surface(100, 100+(i*20), entries[i], screen);
+            apply_surface((SCREEN_WIDTH/float(6.4)), (SCREEN_WIDTH/float(6.4)) + (i * (SCREEN_WIDTH/float(32))), entries[i], screen);
         }
     }
 }

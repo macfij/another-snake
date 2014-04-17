@@ -59,5 +59,8 @@ extern Timer fps;
 extern bool paused;
 extern char buffer[10];
 
+extern int SNAKE_CELL_SIZE;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
 #endif

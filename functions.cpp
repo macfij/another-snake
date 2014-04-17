@@ -43,6 +43,8 @@ bool init() {
         return false;
     screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
             SDL_SWSURFACE);
+//    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
+//                SDL_FULLSCREEN);
     if (screen == NULL)
         return false;
     /* ***do Opcji 3***
@@ -57,11 +59,11 @@ bool init() {
 }
 
 bool load_files() {
-    font = TTF_OpenFont("fonts/Munro.ttf", 25);
+    font = TTF_OpenFont("fonts/Munro.ttf", SCREEN_WIDTH/float(25.6));
     if (font == NULL) {
         return false;
     }
-    fontBigger = TTF_OpenFont("fonts/Munro.ttf", 45);
+    fontBigger = TTF_OpenFont("fonts/Munro.ttf", SCREEN_WIDTH/float(14.2));
     /* ***do Opcji 3***
      opened_mouth = load_Image("opened_mouth.png");
      if(opened_mouth == NULL) return false;
