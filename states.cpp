@@ -21,7 +21,6 @@ Intro::Intro() {
 
 Intro::~Intro() {
     Mix_FreeMusic(music);
-    Mix_CloseAudio();
     SDL_FreeSurface(msgAnother);
     SDL_FreeSurface(msgSnake);
     SDL_FreeSurface(msgSpace);
@@ -72,7 +71,6 @@ void Intro::render() {
 }
 
 Menu::Menu() {
-    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
     menuEntries[0].msg = "NEW GAME";
@@ -98,7 +96,6 @@ Menu::Menu() {
 Menu::~Menu() {
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
-    Mix_CloseAudio();
 }
 
 void Menu::logic() {
@@ -108,6 +105,7 @@ void Menu::logic() {
 void Menu::handle_events() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
+            Mix_CloseAudio();
             nextState = EXIT_STATE;
         }
         if (event.type == SDL_KEYDOWN) {
@@ -163,6 +161,7 @@ void Menu::handle_events() {
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     Mix_PlayChannel(-1, selectSound, 0);
                     SDL_Delay(300);
+                    Mix_CloseAudio();
                     nextState = EXIT_STATE;
                 }
                 break;
@@ -218,6 +217,7 @@ void Menu::handle_events() {
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     Mix_PlayChannel(-1, selectSound, 0);
                     SDL_Delay(300);
+                    Mix_CloseAudio();
                     nextState = EXIT_STATE;
                 }
                 break;
@@ -268,7 +268,6 @@ void Menu::render() {
 }
 
 Option::Option() {
-    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
 }
@@ -318,6 +317,7 @@ void Lose::render() {
 void Lose::handle_events() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
+            Mix_CloseAudio();
             state = EXIT_STATE;
         }
         if ((event.type == SDL_KEYDOWN)) {
@@ -349,7 +349,6 @@ Play::Play() {
     pauseEntries[2].entry = NULL;
     pauseEntries[2].isFocused = false;
     pauseEntries[2].msg = "Exit";
-    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     eatSound = Mix_LoadWAV("sounds/eat.wav");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
@@ -361,13 +360,13 @@ Play::~Play() {
     Mix_FreeChunk(switchSound);
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(deathSound);
-    Mix_CloseAudio();
 }
 
 void Play::handle_events() {
     while (SDL_PollEvent(&event)) {
         moj.handle_input();
         if (event.type == SDL_QUIT) {
+            Mix_CloseAudio();
             nextState = EXIT_STATE;
         }
         if (paused == true) {
@@ -429,6 +428,7 @@ void Play::handle_events() {
                     if (event.key.keysym.sym == SDLK_RETURN) {
                         Mix_PlayChannel(-1, selectSound, 0);
                         SDL_Delay(300);
+                        Mix_CloseAudio();
                         nextState = EXIT_STATE;
                     }
                     if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_UP) {
@@ -548,6 +548,7 @@ void EnterScore::logic() {}
 void EnterScore::handle_events() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
+            Mix_CloseAudio();
             state = EXIT_STATE;
         }
         if (event.type == SDL_KEYDOWN) {
@@ -609,6 +610,7 @@ void ShowHighScores::logic() {}
 void ShowHighScores::handle_events() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
+            Mix_CloseAudio();
             nextState = EXIT_STATE;
         }
         if (event.type == SDL_KEYDOWN) {
