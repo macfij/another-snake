@@ -12,7 +12,6 @@
 Intro::Intro() {
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     music = Mix_LoadMUS("sounds/theme.wav");
-    background = load_Image("images/background.png");
     msgAnother = NULL;
     msgSnake = NULL;
     msgSpace = NULL;
@@ -23,7 +22,6 @@ Intro::Intro() {
 Intro::~Intro() {
     Mix_FreeMusic(music);
     Mix_CloseAudio();
-    SDL_FreeSurface(background);
     SDL_FreeSurface(msgAnother);
     SDL_FreeSurface(msgSnake);
     SDL_FreeSurface(msgSpace);
@@ -75,7 +73,6 @@ void Intro::render() {
 
 Menu::Menu() {
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
-    background = load_Image("images/background.png");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
     menuEntries[0].msg = "NEW GAME";
@@ -99,7 +96,6 @@ Menu::Menu() {
 }
 
 Menu::~Menu() {
-    SDL_FreeSurface(background);
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
     Mix_CloseAudio();
@@ -272,7 +268,6 @@ void Menu::render() {
 }
 
 Option::Option() {
-    background = load_Image("images/background.png");
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
@@ -295,14 +290,12 @@ void Option::render() {
 }
 
 Lose::Lose() {
-    background = load_Image("images/background.png");
     loseMsg = NULL;
     pressMsg = NULL;
     againMsg = NULL;
 }
 
 Lose::~Lose() {
-    SDL_FreeSurface(background);
     SDL_FreeSurface(loseMsg);
     SDL_FreeSurface(pressMsg);
     SDL_FreeSurface(againMsg);
@@ -344,7 +337,6 @@ Play::Play() {
     xFoodPos = &xFood;
     yFoodPos = &yFood;
     handle_high_scores();
-    pauseBackground = load_Image("images/background.png");
     pauseEntries[0].color = focusOnColor;
     pauseEntries[0].entry = NULL;
     pauseEntries[0].isFocused = true;
@@ -365,7 +357,6 @@ Play::Play() {
 }
 
 Play::~Play() {
-    SDL_FreeSurface(pauseBackground);
     Mix_FreeChunk(eatSound);
     Mix_FreeChunk(switchSound);
     Mix_FreeChunk(selectSound);
@@ -540,7 +531,6 @@ void Play::render() {
 }
 
 EnterScore::EnterScore() {
-    background = load_Image("images/background.png");
     nameContainer = "";
     name = NULL;
     message = NULL;
@@ -600,7 +590,6 @@ void EnterScore::render() {
 }
 
 ShowHighScores::ShowHighScores() {
-    background = load_Image("images/background.png");
     message = NULL;
     playAgain = NULL;
     for (int i = 0; i < 10; i++) {
@@ -610,7 +599,6 @@ ShowHighScores::ShowHighScores() {
 }
 
 ShowHighScores::~ShowHighScores() {
-    SDL_FreeSurface(background);
     for (int i = 0; i < 10; i++) {
         SDL_FreeSurface(entries[i]);
     }

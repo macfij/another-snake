@@ -30,7 +30,6 @@ private:
     Mix_Music* music;
     SDL_Surface* msgAnother;
     SDL_Surface* msgSnake;
-    SDL_Surface* background;
     SDL_Surface* msgSpace;
     int posCounter;
     int spacebarCounter;
@@ -47,7 +46,6 @@ public:
     int menu_focus();
 private:
     menuEntry menuEntries[4];
-    SDL_Surface* background;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };
@@ -63,7 +61,6 @@ public:
 private:
     Snake moj;
     Pokarm jedzenie;
-    SDL_Surface* pauseBackground;
     menuEntry pauseEntries[3];
     Mix_Chunk* eatSound;
     Mix_Chunk* switchSound;
@@ -79,7 +76,6 @@ public:
     void render();
     void handle_events();
 private:
-    SDL_Surface* background;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };
@@ -92,7 +88,6 @@ public:
     void render();
     void handle_events();
 private:
-    SDL_Surface* background;
     SDL_Surface* loseMsg;
     SDL_Surface* pressMsg;
     SDL_Surface* againMsg;
@@ -106,7 +101,6 @@ public:
     void render();
     void handle_events();
 private:
-    SDL_Surface* background;
     SDL_Surface* message;
     SDL_Surface* name;
     std::string nameContainer;
@@ -120,7 +114,6 @@ public:
     void render();
     void handle_events();
 private:
-    SDL_Surface* background;
     SDL_Surface* entries[10];
     SDL_Surface* message;
     SDL_Surface* playAgain;
