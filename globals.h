@@ -31,6 +31,11 @@ typedef struct menuEntry {
     SDL_Color color;
 } menuEntry;
 
+typedef struct option{
+    int i;
+    int j;
+}option;
+
 extern scoreEntry highScores[10];
 extern std::string scoresToView[10];
 
@@ -62,5 +67,6 @@ extern char buffer[10];
 extern int SNAKE_CELL_SIZE;
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
+extern int FRAMES_PER_SECOND;
 
 #endif

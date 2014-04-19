@@ -75,7 +75,12 @@ public:
     void logic();
     void render();
     void handle_events();
+    option option_focus();
+    
 private:
+    option optionPosition;
+    option newPosition;
+    menuEntry optionEntries[4][2];
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };
