@@ -119,7 +119,7 @@ public:
     void render();
     void handle_events();
 private:
-    SDL_Surface* entries[10];
+    SDL_Surface* entries[10][3];
     SDL_Surface* message;
     SDL_Surface* playAgain;
 };

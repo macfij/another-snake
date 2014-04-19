@@ -97,7 +97,11 @@ int cmpfunc(const void* a, const void* b) {
 void handle_high_scores() {
     std::ifstream f("highscores.txt");
     for (int i = 0; i < 10; i++) {
+        highScores[i].count = (char*)malloc(sizeof(char) * 3);
+        highScores[i].scoreChar = (char*)malloc(sizeof(char) * 5);
         f >> highScores[i].name >> highScores[i].score;
+        sprintf(highScores[i].count, "%d.", i+1);
+        sprintf(highScores[i].scoreChar, "%d", highScores[i].score);
     }
     f.close();
     qsort(highScores, 10, sizeof(scoreEntry), cmpfunc);
@@ -108,9 +112,6 @@ void update_high_scores() {
     std::ofstream f("highscores.txt");
     for (int i = 0; i < 10; i++) {
         f << highScores[i].name << " " << highScores[i].score << std::endl;
-        std::stringstream tmp;
-        tmp << i+1 << ". " << highScores[i].name << " " << highScores[i].score;
-        scoresToView[i] = tmp.str();
     }
     f.close();
 }

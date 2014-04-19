@@ -21,7 +21,9 @@ enum PossibleStates{
 
 typedef struct scoreEntry {
     int score;
+    char* count;
     std::string name;
+    char* scoreChar;
 } scoreEntry;
 
 typedef struct menuEntry {
@@ -34,10 +36,9 @@ typedef struct menuEntry {
 typedef struct option{
     int i;
     int j;
-}option;
+} option;
 
 extern scoreEntry highScores[10];
-extern std::string scoresToView[10];
 
 extern SDL_Surface *screen;
 extern SDL_Event event;
