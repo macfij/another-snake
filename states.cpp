@@ -308,10 +308,10 @@ Option::Option() {
     optionEntries[3][0].entry = NULL;
     optionEntries[3][0].isFocused = false;
     optionEntries[3][0].color = scoreColor;
-    optionEntries[3][1].msg = "-> to Menu";
+    /* optionEntries[3][1].msg = "-> to Menu";
     optionEntries[3][1].entry = NULL;
     optionEntries[3][1].isFocused = false;
-    optionEntries[3][1].color = scoreColor;
+    optionEntries[3][1].color = scoreColor;*/
 }
 
 Option::~Option() {
@@ -397,19 +397,13 @@ void Option::handle_events() {
 		}
 	    }
 	    if(event.key.keysym.sym == SDLK_RIGHT){
-		if(optionPosition.j == 0){
+		if((optionPosition.i != 3) && (optionPosition.j == 0)){
 		    Mix_PlayChannel(-1, selectSound, 0);
 		    optionEntries[optionPosition.i][optionPosition.j].isFocused = false;
 		    optionPosition.j = 1;
 		    SDL_FreeSurface(optionEntries[optionPosition.i][optionPosition.j].entry);
 		    optionEntries[optionPosition.i][optionPosition.j].isFocused = true;
 		    optionEntries[optionPosition.i][optionPosition.j].color = focusOnColor;
-		    if(optionPosition.i == 3){
-			Mix_PlayChannel(-1, selectSound, 0);
-			SDL_Delay(300);
-			Mix_CloseAudio();
-			nextState = MENU_STATE;
-		    }
 		}
 	    }
 	    if(event.key.keysym.sym == SDLK_LEFT){
@@ -421,7 +415,15 @@ void Option::handle_events() {
 		    optionPosition.j = 0;
 		    optionEntries[optionPosition.i][optionPosition.j].isFocused = true;
 		}
-	    }		
+	    }
+	    if(event.key.keysym.sym == SDLK_RETURN){
+		if(optionPosition.i == 3){
+		    Mix_PlayChannel(-1, selectSound, 0);
+		    SDL_Delay(300);
+		    Mix_CloseAudio();
+		    nextState = MENU_STATE;
+		}
+	    }
 	}
     }
 }
@@ -451,7 +453,7 @@ void Option::render() {
     optionEntries[2][0].entry = TTF_RenderText_Solid(font, optionEntries[2][0].msg, optionEntries[2][0].color);
     optionEntries[2][1].entry = TTF_RenderText_Solid(font, optionEntries[2][1].msg, optionEntries[2][1].color);
     optionEntries[3][0].entry = TTF_RenderText_Solid(font, optionEntries[3][0].msg, optionEntries[3][0].color);
-    optionEntries[3][1].entry = TTF_RenderText_Solid(font, optionEntries[3][1].msg, optionEntries[3][1].color);
+    //optionEntries[3][1].entry = TTF_RenderText_Solid(font, optionEntries[3][1].msg, optionEntries[3][1].color);
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     if (optionEntries[0][0].entry != NULL) {
         apply_surface((SCREEN_WIDTH - optionEntries[0][0].entry->w) / 2,
@@ -481,10 +483,10 @@ void Option::render() {
         apply_surface((SCREEN_WIDTH - optionEntries[3][0].entry->w) / 2,
 		      ((SCREEN_HEIGHT - optionEntries[3][0].entry->h) / 2) + (SCREEN_WIDTH/float(32)), optionEntries[3][0].entry, screen);
     }    
-    if (optionEntries[3][1].entry != NULL) {
+    /* if (optionEntries[3][1].entry != NULL) {
         apply_surface((SCREEN_WIDTH - optionEntries[3][0].entry->w) / 2 + 200,
 		      ((SCREEN_HEIGHT - optionEntries[3][0].entry->h) / 2) + (SCREEN_WIDTH/float(32)), optionEntries[3][1].entry, screen);
-    }    
+		      } */   
 }
 
 Lose::Lose() {
