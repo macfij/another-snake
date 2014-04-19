@@ -308,10 +308,10 @@ Option::Option() {
     optionEntries[3][0].entry = NULL;
     optionEntries[3][0].isFocused = false;
     optionEntries[3][0].color = scoreColor;
-    /* optionEntries[3][1].msg = "-> to Menu";
-     optionEntries[3][1].entry = NULL;
-     optionEntries[3][1].isFocused = false;
-     optionEntries[3][1].color = scoreColor;*/
+    optionEntries[3][1].msg = "";
+    optionEntries[3][1].entry = NULL;
+    optionEntries[3][1].isFocused = false;
+    optionEntries[3][1].color = scoreColor;
 }
 
 Option::~Option() {
