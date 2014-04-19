@@ -368,6 +368,7 @@ void Option::handle_events() {
 			    optionEntries[optionPosition.i][optionPosition.j].msg = "Faster";
 			    break;
 			case 1:
+			    if(SNAKE_CELL_SIZE < 30) SNAKE_CELL_SIZE += 1;
 			    optionEntries[optionPosition.i][optionPosition.j].msg = "Bigger";
 				break;
 			case 2:
@@ -387,6 +388,7 @@ void Option::handle_events() {
 			    optionEntries[optionPosition.i][optionPosition.j].msg = "Slower";
 			    break;
 			case 1:
+			    if(SNAKE_CELL_SIZE > 2) SNAKE_CELL_SIZE -= 1;
 			    optionEntries[optionPosition.i][optionPosition.j].msg = "Smaller";
 				break;
 			case 2:
@@ -453,7 +455,12 @@ void Option::render() {
     //optionEntries[0][1].entry = TTF_RenderText_Solid(font, optionEntries[0][1].msg, optionEntries[0][1].color);
     optionEntries[0][1].entry = TTF_RenderText_Solid(font, str.c_str(), optionEntries[0][1].color);
     optionEntries[1][0].entry = TTF_RenderText_Solid(font, optionEntries[1][0].msg, optionEntries[1][0].color);
-    optionEntries[1][1].entry = TTF_RenderText_Solid(font, optionEntries[1][1].msg, optionEntries[1][1].color);
+    //optionEntries[1][1].entry = TTF_RenderText_Solid(font, optionEntries[1][1].msg, optionEntries[1][1].color);
+    ss.str( std::string() );
+    ss.clear();
+    ss << SNAKE_CELL_SIZE;
+    const std::string str2 = ss.str();
+    optionEntries[1][1].entry = TTF_RenderText_Solid(font, str2.c_str(), optionEntries[1][1].color);
     optionEntries[2][0].entry = TTF_RenderText_Solid(font, optionEntries[2][0].msg, optionEntries[2][0].color);
     optionEntries[2][1].entry = TTF_RenderText_Solid(font, optionEntries[2][1].msg, optionEntries[2][1].color);
     optionEntries[3][0].entry = TTF_RenderText_Solid(font, optionEntries[3][0].msg, optionEntries[3][0].color);
