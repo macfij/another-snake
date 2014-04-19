@@ -75,12 +75,13 @@ public:
     void logic();
     void render();
     void handle_events();
-    option option_focus();
+    int option_focus();
     
 private:
-    option optionPosition;
+    int optionPosition;
     option newPosition;
-    menuEntry optionEntries[4][2];
+    optionEntry optionEntries[4];
+    SDL_Surface* optionValues[3];
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };

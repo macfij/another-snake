@@ -34,3 +34,5 @@ int SNAKE_CELL_SIZE = 10;
 int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
 int FRAMES_PER_SECOND = 20;
+
+bool sound = true;

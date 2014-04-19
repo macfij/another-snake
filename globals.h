@@ -33,6 +33,13 @@ typedef struct menuEntry {
     SDL_Color color;
 } menuEntry;
 
+typedef struct optionEntry {
+    const char* msg[2];
+    bool isFocused;
+    SDL_Surface* entry;
+    SDL_Color color;
+} optionEntry;
+
 typedef struct option{
     int i;
     int j;
@@ -69,5 +76,7 @@ extern int SNAKE_CELL_SIZE;
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
 extern int FRAMES_PER_SECOND;
+
+extern bool sound;
 
 #endif
