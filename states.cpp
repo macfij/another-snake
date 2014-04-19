@@ -447,7 +447,11 @@ option Option::option_focus(){
 
 void Option::render() {
     optionEntries[0][0].entry = TTF_RenderText_Solid(font, optionEntries[0][0].msg, optionEntries[0][0].color);
-    optionEntries[0][1].entry = TTF_RenderText_Solid(font, optionEntries[0][1].msg, optionEntries[0][1].color);
+    std::stringstream ss;
+    ss << FRAMES_PER_SECOND;
+    const std::string str = ss.str();
+    //optionEntries[0][1].entry = TTF_RenderText_Solid(font, optionEntries[0][1].msg, optionEntries[0][1].color);
+    optionEntries[0][1].entry = TTF_RenderText_Solid(font, str.c_str(), optionEntries[0][1].color);
     optionEntries[1][0].entry = TTF_RenderText_Solid(font, optionEntries[1][0].msg, optionEntries[1][0].color);
     optionEntries[1][1].entry = TTF_RenderText_Solid(font, optionEntries[1][1].msg, optionEntries[1][1].color);
     optionEntries[2][0].entry = TTF_RenderText_Solid(font, optionEntries[2][0].msg, optionEntries[2][0].color);
