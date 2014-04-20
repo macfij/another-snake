@@ -11,7 +11,7 @@
 #include <sstream>
 
 #define OPTIONS_XPOS ((SCREEN_WIDTH - 140)/2)
-#define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 5*optionEntries[0].entry->h))
+#define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 6*optionEntries[0].entry->h))
 #define OPTIONS_H optionEntries[0].entry->h
 
 
@@ -292,11 +292,16 @@ Option::Option() {
     optionEntries[2].entry = NULL;
     optionEntries[2].isFocused = false;
     optionEntries[2].color = scoreColor;
-    optionEntries[3].msg[0] = "Exit";
-    optionEntries[3].msg[1] = "EXIT";
+    optionEntries[3].msg[0] = "Resolution";
+    optionEntries[3].msg[1] = "RESOLUTION";
     optionEntries[3].entry = NULL;
     optionEntries[3].isFocused = false;
     optionEntries[3].color = scoreColor;
+    optionEntries[4].msg[0] = "Exit";
+    optionEntries[4].msg[1] = "EXIT";
+    optionEntries[4].entry = NULL;
+    optionEntries[4].isFocused = false;
+    optionEntries[4].color = scoreColor;
 }
 
 Option::~Option() {
@@ -316,7 +321,8 @@ void Option::handle_events() {
             nextState = EXIT_STATE;
         }
         if (event.type == SDL_KEYDOWN) {
-            optionPosition = option_focus();
+
+	    optionPosition = option_focus();
             if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
 		Mix_PlayChannel(-1, switchSound, 0);		
 		optionEntries[optionPosition].isFocused = false;
@@ -325,10 +331,10 @@ void Option::handle_events() {
 		    if (optionPosition > 0)
 			optionPosition--;
 		    else
-			optionPosition = 3;
+			optionPosition = 4;
 		}
 		if (event.key.keysym.sym == SDLK_DOWN) {
-		    if (optionPosition < 3)
+		    if (optionPosition < 4)
 			optionPosition++;
 		    else
 			optionPosition = 0;
@@ -348,6 +354,9 @@ void Option::handle_events() {
 		case 2:
 		    sound = true;
 		    break;
+		case 3:
+		    if(whichRes < 7) whichRes += 1;
+		    break;
 		}
 	    }
 	    if (event.key.keysym.sym == SDLK_LEFT){
@@ -362,12 +371,19 @@ void Option::handle_events() {
 		case 2:
 		    sound = false;
 		    break;
+		case 3:
+		    if(whichRes > 0) whichRes -= 1;
+		    break;
 		}
 	    }
 	    if (event.key.keysym.sym == SDLK_RETURN){
 		Mix_PlayChannel(-1, selectSound, 0);
 		SDL_Delay(300);
-		if(optionPosition == 3) nextState = MENU_STATE;
+		if(optionPosition == 4){
+		    SCREEN_WIDTH = resolution[whichRes][0];
+		    SCREEN_HEIGHT = resolution[whichRes][1];
+		    nextState = MENU_STATE;
+		}
 	    }
 	}
     }
@@ -376,7 +392,9 @@ void Option::handle_events() {
 
 
 int Option::option_focus() {
-    for (int i = 0; i < 4; i++)	if(optionEntries[i].isFocused) return i;
+    for (int i = 0; i < 5; i++){
+	if(optionEntries[i].isFocused) return i;
+    }
     return 0;
 }
 
@@ -389,6 +407,8 @@ void Option::render() {
 						  optionEntries[2].color);
     optionEntries[3].entry = TTF_RenderText_Solid(font, optionEntries[3].msg[optionEntries[3].isFocused],
 						  optionEntries[3].color);
+    optionEntries[4].entry = TTF_RenderText_Solid(font, optionEntries[4].msg[optionEntries[4].isFocused],
+						  optionEntries[4].color);
 
     //TO-DO:
     std::stringstream ss;
@@ -414,6 +434,12 @@ void Option::render() {
 	else
 	    optionValues[2] = TTF_RenderText_Solid(font, "Off", optionEntries[2].color);
     }
+    ss.str(std::string());
+    ss.clear();
+    ss << resolution[whichRes][0] <<"x"<<resolution[whichRes][1];
+    str = ss.str();
+    optionValues[3] = TTF_RenderText_Solid(font, str.c_str(), optionEntries[3].color);
+
  
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     if (optionEntries[0].entry != NULL){
@@ -426,8 +452,12 @@ void Option::render() {
 	apply_surface(OPTIONS_XPOS, OPTIONS_YPOS + 2*OPTIONS_H, optionEntries[2].entry, screen);
     }
     if (optionEntries[3].entry != NULL){
-	apply_surface(OPTIONS_XPOS, OPTIONS_YPOS + 4*OPTIONS_H, optionEntries[3].entry, screen);
+	apply_surface(OPTIONS_XPOS, OPTIONS_YPOS + 3*OPTIONS_H, optionEntries[3].entry, screen);
     }
+    if (optionEntries[4].entry != NULL){
+	apply_surface(OPTIONS_XPOS, OPTIONS_YPOS + 5*OPTIONS_H, optionEntries[4].entry, screen);
+    }
+
 
     if (optionValues[0] != NULL){
 	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS, optionValues[0], screen);
@@ -435,8 +465,11 @@ void Option::render() {
     if (optionValues[1] != NULL){
 	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS+OPTIONS_H, optionValues[1], screen);
     }
-    if (optionValues[0] != NULL){
+    if (optionValues[2] != NULL){
 	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS+2*OPTIONS_H, optionValues[2], screen);
+    }
+    if (optionValues[3] != NULL){
+	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS+3*OPTIONS_H, optionValues[3], screen);
     }
 }
 

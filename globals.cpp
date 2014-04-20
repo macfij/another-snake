@@ -35,4 +35,9 @@ int SCREEN_WIDTH = 640;
 int SCREEN_HEIGHT = 480;
 int FRAMES_PER_SECOND = 20;
 
+int resolution[8][2] = {{640, 480}, {800, 600}, {1024, 768}, {1280, 720},
+			{1152, 864}, {1280, 900}, {1600, 1200}, {1920, 1080}};
+
+int whichRes = 0;
+
 bool sound = true;

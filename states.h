@@ -79,8 +79,8 @@ public:
     
 private:
     int optionPosition;
-    optionEntry optionEntries[4];
-    SDL_Surface* optionValues[3];
+    optionEntry optionEntries[5];
+    SDL_Surface* optionValues[4];
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };

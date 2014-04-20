@@ -74,4 +74,7 @@ extern int FRAMES_PER_SECOND;
 
 extern bool sound;
 
+extern int resolution[8][2];
+extern int whichRes;
+
 #endif
