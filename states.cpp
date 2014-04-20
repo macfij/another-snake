@@ -382,7 +382,15 @@ void Option::handle_events() {
 		if(optionPosition == 4){
 		    SCREEN_WIDTH = resolution[whichRes][0];
 		    SCREEN_HEIGHT = resolution[whichRes][1];
+		    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
+            SDL_SWSURFACE);
+
+		    
+		    std::cout<<"WAT";
+		    //nextState = INTRO_STATE;
+
 		    nextState = MENU_STATE;
+		    
 		}
 	    }
 	}
