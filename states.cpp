@@ -377,9 +377,9 @@ void Option::handle_events() {
 		}
 	    }
 	    if (event.key.keysym.sym == SDLK_RETURN){
-		Mix_PlayChannel(-1, selectSound, 0);
-		SDL_Delay(300);
 		if(optionPosition == 4){
+		    Mix_PlayChannel(-1, selectSound, 0);
+		    SDL_Delay(300);
 		    SCREEN_WIDTH = resolution[whichRes][0];
 		    SCREEN_HEIGHT = resolution[whichRes][1];
 		    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
