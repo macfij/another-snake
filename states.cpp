@@ -8,10 +8,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
-//#include <stdio.h>
 #include <sstream>
 
-#define OPTIONS_XPOS (0.3*(SCREEN_WIDTH - optionEntries[0].entry->w))
+#define OPTIONS_XPOS ((SCREEN_WIDTH - 140)/2)
 #define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 5*optionEntries[0].entry->h))
 #define OPTIONS_H optionEntries[0].entry->h
 
@@ -306,12 +305,9 @@ Option::~Option() {
 }
 
 void Option::logic() {
-    
 }
 
 void Option::handle_events() {
-    // std::string Result2;
-    //std::ostringstream convert2;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             Mix_PlayChannel(-1, selectSound, 0);
@@ -322,6 +318,7 @@ void Option::handle_events() {
         if (event.type == SDL_KEYDOWN) {
             optionPosition = option_focus();
             if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+		Mix_PlayChannel(-1, switchSound, 0);		
 		optionEntries[optionPosition].isFocused = false;
 		optionEntries[optionPosition].color = scoreColor;
 		if (event.key.keysym.sym == SDLK_UP) {
@@ -340,6 +337,7 @@ void Option::handle_events() {
 		optionEntries[optionPosition].color = focusOnColor;
 	    }
 	    if (event.key.keysym.sym == SDLK_RIGHT){
+		Mix_PlayChannel(-1, switchSound, 0);
 		switch(optionPosition){
 		case 0:
 		    if (FRAMES_PER_SECOND < 100) FRAMES_PER_SECOND += 5;
@@ -353,6 +351,7 @@ void Option::handle_events() {
 		}
 	    }
 	    if (event.key.keysym.sym == SDLK_LEFT){
+		Mix_PlayChannel(-1, switchSound, 0);
 		switch(optionPosition){
 		case 0:
 		    if (FRAMES_PER_SECOND > 10) FRAMES_PER_SECOND -= 5;
@@ -366,6 +365,8 @@ void Option::handle_events() {
 		}
 	    }
 	    if (event.key.keysym.sym == SDLK_RETURN){
+		Mix_PlayChannel(-1, selectSound, 0);
+		SDL_Delay(300);
 		if(optionPosition == 3) nextState = MENU_STATE;
 	    }
 	}
@@ -389,13 +390,12 @@ void Option::render() {
     optionEntries[3].entry = TTF_RenderText_Solid(font, optionEntries[3].msg[optionEntries[3].isFocused],
 						  optionEntries[3].color);
 
+    //TO-DO:
     std::stringstream ss;
-    std::string str;
-    
+    std::string str;  
     ss << FRAMES_PER_SECOND;
     str = ss.str();
     optionValues[0] = TTF_RenderText_Solid(font, str.c_str(), optionEntries[0].color);
-
     ss.str(std::string());
     ss.clear();
     ss << SNAKE_CELL_SIZE;
@@ -416,7 +416,6 @@ void Option::render() {
     }
  
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
-
     if (optionEntries[0].entry != NULL){
 	apply_surface(OPTIONS_XPOS, OPTIONS_YPOS, optionEntries[0].entry, screen);
     }
@@ -431,21 +430,14 @@ void Option::render() {
     }
 
     if (optionValues[0] != NULL){
-	apply_surface(SCREEN_WIDTH-2*OPTIONS_XPOS, OPTIONS_YPOS, optionValues[0], screen);
+	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS, optionValues[0], screen);
     }
     if (optionValues[1] != NULL){
-	apply_surface(SCREEN_WIDTH-2*OPTIONS_XPOS, OPTIONS_YPOS+OPTIONS_H, optionValues[1], screen);
+	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS+OPTIONS_H, optionValues[1], screen);
     }
     if (optionValues[0] != NULL){
-	apply_surface(SCREEN_WIDTH-2*OPTIONS_XPOS, OPTIONS_YPOS+2*OPTIONS_H, optionValues[2], screen);
+	apply_surface(OPTIONS_XPOS + 110, OPTIONS_YPOS+2*OPTIONS_H, optionValues[2], screen);
     }
-
-
-    
-    /* if (optionEntries[3][1].entry != NULL) {
-       apply_surface((SCREEN_WIDTH - optionEntries[3][0].entry->w) / 2 + 200,
-       ((SCREEN_HEIGHT - optionEntries[3][0].entry->h) / 2) + (SCREEN_WIDTH/float(32)), optionEntries[3][1].entry, screen);
-       } */
 }
 
 Lose::Lose() {

@@ -40,11 +40,6 @@ typedef struct optionEntry {
     SDL_Color color;
 } optionEntry;
 
-typedef struct option{
-    int i;
-    int j;
-} option;
-
 extern scoreEntry highScores[10];
 
 extern SDL_Surface *screen;
