@@ -47,43 +47,87 @@ bool Snake::check_collision() {
 */
 void Snake::handle_input() {
     if (event.type == SDL_KEYDOWN) {
+        if (isArrow) {
+            switch (event.key.keysym.sym) {
+            case SDLK_UP:
+                if ( xPos[0] != xPos[1]) {
+                    direction = UP;
+                    if (yVel == 0) {
+                        yVel = -velocity;
+                    }
+                    xVel = 0;
+                }
+                break;
+            case SDLK_DOWN:
+                if ( xPos[0] != xPos[1]) {
+                    direction = DOWN;
+                    if (yVel == 0) {
+                        yVel = +velocity;
+                    }
+                    xVel = 0;
+                }
+                break;
+            case SDLK_LEFT:
+                if (yPos[0] != yPos[1]) {
+                    direction = LEFT;
+                    if (xVel == 0) {
+                        xVel = -velocity;
+                    }
+                    yVel = 0;
+                }
+                break;
+            case SDLK_RIGHT:
+                if (yPos[0] != yPos[1]) {
+                    direction = RIGHT;
+                    if (xVel == 0) {
+                        xVel = +velocity;
+                    }
+                    yVel = 0;
+                }
+                break;
+        }
+        }
+        else if (isArrow == false) {
+            switch (event.key.keysym.sym) {
+            case SDLK_w:
+                if ( xPos[0] != xPos[1]) {
+                    direction = UP;
+                    if (yVel == 0) {
+                        yVel = -velocity;
+                    }
+                    xVel = 0;
+                }
+                break;
+            case SDLK_s:
+                if ( xPos[0] != xPos[1]) {
+                    direction = DOWN;
+                    if (yVel == 0) {
+                        yVel = +velocity;
+                    }
+                    xVel = 0;
+                }
+                break;
+            case SDLK_a:
+                if (yPos[0] != yPos[1]) {
+                    direction = LEFT;
+                    if (xVel == 0) {
+                        xVel = -velocity;
+                    }
+                    yVel = 0;
+                }
+                break;
+            case SDLK_d:
+                if (yPos[0] != yPos[1]) {
+                    direction = RIGHT;
+                    if (xVel == 0) {
+                        xVel = +velocity;
+                    }
+                    yVel = 0;
+                }
+                break;
+        }
+        }
         switch (event.key.keysym.sym) {
-        case SDLK_w:
-            if ( xPos[0] != xPos[1]) {
-                direction = UP;
-                if (yVel == 0) {
-                    yVel = -velocity;
-                }
-                xVel = 0;
-            }
-            break;
-        case SDLK_s:
-            if ( xPos[0] != xPos[1]) {
-                direction = DOWN;
-                if (yVel == 0) {
-                    yVel = +velocity;
-                }
-                xVel = 0;
-            }
-            break;
-        case SDLK_a:
-            if (yPos[0] != yPos[1]) {
-                direction = LEFT;
-                if (xVel == 0) {
-                    xVel = -velocity;
-                }
-                yVel = 0;
-            }
-            break;
-        case SDLK_d:
-            if (yPos[0] != yPos[1]) {
-                direction = RIGHT;
-                if (xVel == 0) {
-                    xVel = +velocity;
-                }
-                yVel = 0;
-            }
-            break;
         case SDLK_f:
             open = !open;
             break;

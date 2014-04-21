@@ -41,3 +41,8 @@ int resolution[8][2] = {{640, 480}, {800, 600}, {1024, 768}, {1280, 720},
 int whichRes = 0;
 
 bool sound = true;
+bool fullscreen = false;
+bool isArrow = false;
+
+Uint8 backgrounds[2][3] = {{0x01, 0x01, 0x01},{0xFF, 0xFF, 0xFF}};
+int whichBackground = 0;

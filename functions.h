@@ -27,5 +27,7 @@ void handle_high_scores();
 
 void update_high_scores();
 
+void toggle_fullscreen(SDL_Surface*);
+
 #endif
 

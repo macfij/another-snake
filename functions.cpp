@@ -10,6 +10,7 @@
 #include "globals.h"
 #include <stdio.h>
 
+
 SDL_Surface *load_Image(std::string filename) {
     SDL_Surface* loadedImage = NULL;
     SDL_Surface* optimizedImage = NULL;
@@ -59,11 +60,11 @@ bool init() {
 }
 
 bool load_files() {
-    font = TTF_OpenFont("fonts/Munro.ttf", SCREEN_WIDTH/float(25.6));
+    font = TTF_OpenFont("fonts/Munro.ttf", FONT_SIZE);
     if (font == NULL) {
         return false;
     }
-    fontBigger = TTF_OpenFont("fonts/Munro.ttf", SCREEN_WIDTH/float(14.2));
+    fontBigger = TTF_OpenFont("fonts/Munro.ttf", BIGGER_FONT_SIZE);
     /* ***do Opcji 3***
      opened_mouth = load_Image("opened_mouth.png");
      if(opened_mouth == NULL) return false;
@@ -115,3 +116,15 @@ void update_high_scores() {
     }
     f.close();
 }
+
+void toggle_fullscreen(SDL_Surface* screen) {
+    if (fullscreen) {
+        screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
+                    SDL_FULLSCREEN);
+    }
+    else {
+        screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
+                    SDL_SWSURFACE);
+    }
+}
+

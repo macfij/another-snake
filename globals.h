@@ -73,8 +73,16 @@ extern int SCREEN_HEIGHT;
 extern int FRAMES_PER_SECOND;
 
 extern bool sound;
+extern bool fullscreen;
+extern bool isArrow;
 
 extern int resolution[8][2];
 extern int whichRes;
+
+extern Uint8 backgrounds[2][3];
+extern int whichBackground;
+
+#define FONT_SIZE (SCREEN_WIDTH/float(25.6))
+#define BIGGER_FONT_SIZE (SCREEN_WIDTH/float(14.2))
 
 #endif
