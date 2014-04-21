@@ -11,7 +11,7 @@
 #include <sstream>
 
 #define OPTIONS_XPOS ((SCREEN_WIDTH - 140)/2)
-#define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 6*optionEntries[0].entry->h))
+#define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 9*optionEntries[0].entry->h))
 #define OPTIONS_H (optionEntries[0].entry->h)
 #define OPTIONS_SPACING (SCREEN_WIDTH/5)
 
@@ -423,7 +423,7 @@ void Option::handle_events() {
                 }
                 switch (optionPosition) {
                 case 0:
-                    if (FRAMES_PER_SECOND > 10)
+                    if (FRAMES_PER_SECOND > 5)
                         FRAMES_PER_SECOND -= 5;
                     break;
                 case 1:

@@ -204,32 +204,43 @@ void Snake::show() {
             snakeBody.y = *yPos - (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Smaller piece of snakes head.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.6) + faceVar * (SNAKE_CELL_SIZE * 0.2);
             snakeBody.y = *yPos - (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.2);
-            SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Snakes eye.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.6) + faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.y = *yPos + (SNAKE_CELL_SIZE * 0.2);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Snakes mouth.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.4) - faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.y = *yPos;
             snakeBody.w = (SNAKE_CELL_SIZE * 0.8);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.8);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
-        } else {
+        }
+	else {
             snakeBody.x = *xPos;
             snakeBody.y = *yPos;
             snakeBody.w = (SNAKE_CELL_SIZE * 1.6);
@@ -243,18 +254,23 @@ void Snake::show() {
             snakeBody.y = *yPos + (SNAKE_CELL_SIZE * 0.2);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Snakes mouth.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.4) - faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.y = *yPos + (SNAKE_CELL_SIZE * 0.6);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.8);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.2);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
         }
-    } else {
+    }
+    else {
         if (yVel >= 0)
             faceVar = -1;
         else
@@ -273,35 +289,44 @@ void Snake::show() {
             snakeBody.y = *yPos + faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 
 	    //Smaller piece of snakes head.
 	    snakeBody.x = *xPos - (SNAKE_CELL_SIZE * 0.4);
             snakeBody.y = *yPos + faceVar;
             snakeBody.w = (SNAKE_CELL_SIZE * 0.2);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-	    
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
+        
             //Snakes eye.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.2);
             snakeBody.y = *yPos + faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Snakes mouth.
             snakeBody.x = *xPos;
             snakeBody.y = *yPos - (SNAKE_CELL_SIZE * 0.2) - faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.8);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.8);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-        } else {
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
-            snakeBody.x = *xPos;
+        }
+	else {
+	    snakeBody.x = *xPos;
             snakeBody.y = *yPos - (SNAKE_CELL_SIZE * 0.6);
             snakeBody.w = SNAKE_CELL_SIZE;
             snakeBody.h = (SNAKE_CELL_SIZE * 1.6);
@@ -314,17 +339,21 @@ void Snake::show() {
             snakeBody.y = *yPos + faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.4);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.4);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
 	    
             //Snakes mouth.
             snakeBody.x = *xPos + (SNAKE_CELL_SIZE * 0.6);
             snakeBody.y = *yPos - (SNAKE_CELL_SIZE * 0.2) - faceVar * (SNAKE_CELL_SIZE * 0.4);
             snakeBody.w = (SNAKE_CELL_SIZE * 0.2);
             snakeBody.h = (SNAKE_CELL_SIZE * 0.8);
-            SDL_FillRect(screen, &snakeBody,
-			 SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-        }
+	    SDL_FillRect(screen, &snakeBody, SDL_MapRGB(screen->format,
+							backgrounds[whichBackground][0],
+							backgrounds[whichBackground][1],
+							backgrounds[whichBackground][2]));
+	}
     }
     
 }
