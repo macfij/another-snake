@@ -2,7 +2,7 @@ Another SNAKE
 =============
 
 This is a snake game made for fun by two programming noobs.
-C++, SDL.
+Linux, C++, SDL.
 
 Features
 ========
@@ -14,7 +14,7 @@ Features
 
 Source code
 ===========
-Commit history : https://bitbucket.org/zespolwonsza/wonsz-power/commits/branch/master
+Commit history : https://bitbucket.org/zespolwonsza/another-snake/commits/branch/master
 
 Authors
 =======
