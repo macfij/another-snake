@@ -14,6 +14,7 @@
 #define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 9*optionEntries[0].entry->h))
 #define OPTIONS_H (optionEntries[0].entry->h)
 #define OPTIONS_SPACING (SCREEN_WIDTH/5)
+#define M(c,n,f,v) c##Entries[n].f = v;
 
 Intro::Intro() {
     Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -78,7 +79,7 @@ void Intro::render() {
 Menu::Menu() {
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
-    menuEntries[0].msg = "NEW GAME";
+    M(menu,0,msg,"NEW GAME")
     menuEntries[0].color = focusOnColor;
     menuEntries[0].entry = NULL;
     menuEntries[0].isFocused = true;
