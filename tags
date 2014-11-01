@@ -1,0 +1,235 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BIGGER_FONT_SIZE	globals.h	89;"	d
+CC	Makefile	/^CC = g++$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g -std=gnu++0x$/;"	m
+CONSTANTS_H	constants.h	2;"	d
+DOWN	snake.h	/^    RIGHT, LEFT, UP, DOWN,$/;"	e	enum:Directions
+Directions	snake.h	/^enum Directions {$/;"	g
+ENTRY_SCORE_STATE	globals.h	/^    ENTRY_SCORE_STATE,$/;"	e	enum:PossibleStates
+EXIT_STATE	globals.h	/^    EXIT_STATE,$/;"	e	enum:PossibleStates
+EnterScore	states.cpp	/^EnterScore::EnterScore() {$/;"	f	class:EnterScore
+EnterScore	states.h	/^class EnterScore: public GameState {$/;"	c
+FONT_SIZE	globals.h	88;"	d
+FRAMES_PER_SECOND	globals.cpp	/^int FRAMES_PER_SECOND = 20;$/;"	v
+FUNCTIONS_H	functions.h	2;"	d
+GLOBALS_H	globals.h	2;"	d
+GameState	states.h	/^class GameState {$/;"	c
+HIGH_SCORES_STATE	globals.h	/^    HIGH_SCORES_STATE,$/;"	e	enum:PossibleStates
+INTRO_STATE	globals.h	/^    INTRO_STATE,$/;"	e	enum:PossibleStates
+Intro	states.cpp	/^Intro::Intro() {$/;"	f	class:Intro
+Intro	states.h	/^class Intro: public GameState {$/;"	c
+LEFT	snake.h	/^    RIGHT, LEFT, UP, DOWN,$/;"	e	enum:Directions
+LIBS	Makefile	/^LIBS = -lSDL -lSDL_image -lSDL_ttf -lSDL_mixer$/;"	m
+LOSE_STATE	globals.h	/^    LOSE_STATE,$/;"	e	enum:PossibleStates
+Lose	states.cpp	/^Lose::Lose() {$/;"	f	class:Lose
+Lose	states.h	/^class Lose: public GameState {$/;"	c
+M	states.cpp	17;"	d	file:
+MENU_STATE	globals.h	/^    MENU_STATE,$/;"	e	enum:PossibleStates
+Menu	states.cpp	/^Menu::Menu() {$/;"	f	class:Menu
+Menu	states.h	/^class Menu: public GameState {$/;"	c
+NULL_STATE	globals.h	/^    NULL_STATE,$/;"	e	enum:PossibleStates
+OPTIONS_H	states.cpp	15;"	d	file:
+OPTIONS_SPACING	states.cpp	16;"	d	file:
+OPTIONS_XPOS	states.cpp	13;"	d	file:
+OPTIONS_YPOS	states.cpp	14;"	d	file:
+OPTION_STATE	globals.h	/^    OPTION_STATE,$/;"	e	enum:PossibleStates
+Option	states.cpp	/^Option::Option() {$/;"	f	class:Option
+Option	states.h	/^class Option: public GameState {$/;"	c
+PLAY_STATE	globals.h	/^    PLAY_STATE,$/;"	e	enum:PossibleStates
+Play	states.cpp	/^Play::Play() {$/;"	f	class:Play
+Play	states.h	/^class Play: public GameState {$/;"	c
+Pokarm	pokarm.cpp	/^Pokarm::Pokarm() {$/;"	f	class:Pokarm
+Pokarm	pokarm.h	/^class Pokarm {$/;"	c
+PossibleStates	globals.h	/^enum PossibleStates{$/;"	g
+RIGHT	snake.h	/^    RIGHT, LEFT, UP, DOWN,$/;"	e	enum:Directions
+SCREEN_BPP	constants.h	/^const int SCREEN_BPP = 32;$/;"	v
+SCREEN_HEIGHT	globals.cpp	/^int SCREEN_HEIGHT = 480;$/;"	v
+SCREEN_WIDTH	globals.cpp	/^int SCREEN_WIDTH = 640;$/;"	v
+SNAKE_CELL_SEPARATION	constants.h	/^const int SNAKE_CELL_SEPARATION = 1;$/;"	v
+SNAKE_CELL_SIZE	globals.cpp	/^int SNAKE_CELL_SIZE = 10;$/;"	v
+SNAKE_LENGTH	constants.h	/^const int SNAKE_LENGTH = 25;$/;"	v
+SOURCES	Makefile	/^SOURCES = main.cpp functions.cpp snake.cpp timer.cpp pokarm.cpp globals.cpp states.cpp$/;"	m
+STATES_H_	states.h	2;"	d
+ShowHighScores	states.cpp	/^ShowHighScores::ShowHighScores() {$/;"	f	class:ShowHighScores
+ShowHighScores	states.h	/^class ShowHighScores: public GameState {$/;"	c
+Snake	snake.cpp	/^Snake::Snake() {$/;"	f	class:Snake
+Snake	snake.h	/^class Snake {$/;"	c
+TARGET	Makefile	/^TARGET = snake$/;"	m
+Timer	timer.cpp	/^Timer::Timer() {$/;"	f	class:Timer
+Timer	timer.h	/^class Timer {$/;"	c
+UP	snake.h	/^    RIGHT, LEFT, UP, DOWN,$/;"	e	enum:Directions
+_POKARM_H_	pokarm.h	2;"	d
+_SNAKE_H_	snake.h	2;"	d
+_TIMER_H_	timer.h	2;"	d
+againMsg	states.h	/^    SDL_Surface* againMsg;$/;"	m	class:Lose
+apply_surface	functions.cpp	/^void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination,$/;"	f
+backgrounds	globals.cpp	/^Uint8 backgrounds[2][3] = {{0x01, 0x01, 0x01},{0xFF, 0xFF, 0xFF}};$/;"	v
+buffer	globals.cpp	/^char buffer[10];$/;"	v
+cap	globals.cpp	/^bool cap = true;$/;"	v
+change_state	main.cpp	/^void change_state() {$/;"	f
+check_collision	snake.cpp	/^bool Snake::check_collision() {$/;"	f	class:Snake
+clean_up	functions.cpp	/^void clean_up() {$/;"	f
+cmpfunc	functions.cpp	/^int cmpfunc(const void* a, const void* b) {$/;"	f
+color	globals.h	/^    SDL_Color color;$/;"	m	struct:menuEntry
+color	globals.h	/^    SDL_Color color;$/;"	m	struct:optionEntry
+convert_int_to_char	functions.cpp	/^const char* convert_int_to_char(int x, char buffer[]) {$/;"	f
+count	globals.h	/^    char* count;$/;"	m	struct:scoreEntry
+currState	main.cpp	/^GameState* currState;$/;"	v
+deathSound	states.h	/^    Mix_Chunk* deathSound;$/;"	m	class:Play
+direction	snake.h	/^    Directions direction;$/;"	m	class:Snake
+eatSound	states.h	/^    Mix_Chunk* eatSound;$/;"	m	class:Play
+entries	states.h	/^    SDL_Surface* entries[10][3];$/;"	m	class:ShowHighScores
+entry	globals.h	/^    SDL_Surface* entry;$/;"	m	struct:menuEntry
+entry	globals.h	/^    SDL_Surface* entry;$/;"	m	struct:optionEntry
+event	globals.cpp	/^SDL_Event event;$/;"	v
+faceVar	snake.h	/^    int faceVar;$/;"	m	class:Snake
+focusOnColor	globals.cpp	/^SDL_Color focusOnColor = {255, 255, 255};$/;"	v
+font	globals.cpp	/^TTF_Font *font = NULL;$/;"	v
+fontBigger	globals.cpp	/^TTF_Font *fontBigger = NULL;$/;"	v
+fps	globals.cpp	/^Timer fps;$/;"	v
+frame	globals.cpp	/^int frame = 0;$/;"	v
+fullscreen	globals.cpp	/^bool fullscreen = false;$/;"	v
+get_dir	snake.cpp	/^int Snake::get_dir() {$/;"	f	class:Snake
+get_position	pokarm.cpp	/^void Pokarm::get_position(int* x, int* y) {$/;"	f	class:Pokarm
+get_position	snake.cpp	/^void Snake::get_position(int* x, int* y) {$/;"	f	class:Snake
+get_ticks	timer.cpp	/^int Timer::get_ticks() {$/;"	f	class:Timer
+grow	snake.cpp	/^void Snake::grow() {$/;"	f	class:Snake
+h	pokarm.h	/^    int w, h;$/;"	m	class:Pokarm
+h	snake.h	/^    int w, h;$/;"	m	class:Snake
+handle_events	states.cpp	/^void EnterScore::handle_events() {$/;"	f	class:EnterScore
+handle_events	states.cpp	/^void Intro::handle_events() {$/;"	f	class:Intro
+handle_events	states.cpp	/^void Lose::handle_events() {$/;"	f	class:Lose
+handle_events	states.cpp	/^void Menu::handle_events() {$/;"	f	class:Menu
+handle_events	states.cpp	/^void Option::handle_events() {$/;"	f	class:Option
+handle_events	states.cpp	/^void Play::handle_events() {$/;"	f	class:Play
+handle_events	states.cpp	/^void ShowHighScores::handle_events() {$/;"	f	class:ShowHighScores
+handle_high_scores	functions.cpp	/^void handle_high_scores() {$/;"	f
+handle_input	snake.cpp	/^void Snake::handle_input() {$/;"	f	class:Snake
+highScores	globals.cpp	/^scoreEntry highScores[10];$/;"	v
+init	functions.cpp	/^bool init() {$/;"	f
+isArrow	globals.cpp	/^bool isArrow = false;$/;"	v
+isFocused	globals.h	/^    bool isFocused;$/;"	m	struct:menuEntry
+isFocused	globals.h	/^    bool isFocused;$/;"	m	struct:optionEntry
+is_paused	timer.cpp	/^bool Timer::is_paused() {$/;"	f	class:Timer
+is_started	timer.cpp	/^bool Timer::is_started() {$/;"	f	class:Timer
+jedzenie	states.h	/^    Pokarm jedzenie;$/;"	m	class:Play
+length	snake.h	/^    int length;$/;"	m	class:Snake
+load_Image	functions.cpp	/^SDL_Surface *load_Image(std::string filename) {$/;"	f
+load_files	functions.cpp	/^bool load_files() {$/;"	f
+logic	states.cpp	/^void EnterScore::logic() {$/;"	f	class:EnterScore
+logic	states.cpp	/^void Intro::logic() {$/;"	f	class:Intro
+logic	states.cpp	/^void Lose::logic() {$/;"	f	class:Lose
+logic	states.cpp	/^void Menu::logic() {$/;"	f	class:Menu
+logic	states.cpp	/^void Option::logic() {$/;"	f	class:Option
+logic	states.cpp	/^void Play::logic() {$/;"	f	class:Play
+logic	states.cpp	/^void ShowHighScores::logic() {$/;"	f	class:ShowHighScores
+loseMsg	states.h	/^    SDL_Surface* loseMsg;$/;"	m	class:Lose
+main	main.cpp	/^int main(int argc, char* args[]) {$/;"	f
+menuEntries	states.h	/^    menuEntry menuEntries[4];$/;"	m	class:Menu
+menuEntry	globals.h	/^    menuEntry(const char* msg_, bool isFocused_, $/;"	f	struct:menuEntry
+menuEntry	globals.h	/^typedef struct menuEntry {$/;"	s
+menuEntry	globals.h	/^} menuEntry;$/;"	t	typeref:struct:menuEntry
+menu_focus	states.cpp	/^int Menu::menu_focus() {$/;"	f	class:Menu
+message	states.h	/^    SDL_Surface* message;$/;"	m	class:EnterScore
+message	states.h	/^    SDL_Surface* message;$/;"	m	class:ShowHighScores
+moj	states.h	/^    Snake moj;$/;"	m	class:Play
+mouth_change_state	snake.cpp	/^void Snake::mouth_change_state(bool isOpen) {$/;"	f	class:Snake
+mouth_open	snake.cpp	/^void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,$/;"	f	class:Snake
+move	snake.cpp	/^void Snake::move() {$/;"	f	class:Snake
+msg	globals.h	/^    const char* msg;$/;"	m	struct:menuEntry
+msg	globals.h	/^    const char* msg[2];$/;"	m	struct:optionEntry
+msgAnother	states.h	/^    SDL_Surface* msgAnother;$/;"	m	class:Intro
+msgSnake	states.h	/^    SDL_Surface* msgSnake;$/;"	m	class:Intro
+msgSpace	states.h	/^    SDL_Surface* msgSpace;$/;"	m	class:Intro
+music	states.h	/^    Mix_Music* music;$/;"	m	class:Intro
+name	globals.h	/^    std::string name;$/;"	m	struct:scoreEntry
+name	states.h	/^    SDL_Surface* name;$/;"	m	class:EnterScore
+nameContainer	states.h	/^    std::string nameContainer;$/;"	m	class:EnterScore
+nextState	globals.cpp	/^int nextState = NULL_STATE;$/;"	v
+open	snake.h	/^    bool open;$/;"	m	class:Snake
+optionEntries	states.h	/^    optionEntry optionEntries[8];$/;"	m	class:Option
+optionEntry	globals.h	/^typedef struct optionEntry {$/;"	s
+optionEntry	globals.h	/^} optionEntry;$/;"	t	typeref:struct:optionEntry
+optionPosition	states.h	/^    int optionPosition;$/;"	m	class:Option
+optionValues	states.h	/^    SDL_Surface* optionValues[7];$/;"	m	class:Option
+option_focus	states.cpp	/^int Option::option_focus() {$/;"	f	class:Option
+pause	timer.cpp	/^void Timer::pause() {$/;"	f	class:Timer
+pauseEntries	states.h	/^    menuEntry *pauseEntries;$/;"	m	class:Play
+pause_focus	states.cpp	/^int Play::pause_focus() {$/;"	f	class:Play
+paused	globals.cpp	/^bool paused = false;$/;"	v
+paused	timer.h	/^    bool paused;$/;"	m	class:Timer
+pausedTicks	timer.h	/^    int pausedTicks;$/;"	m	class:Timer
+playAgain	states.h	/^    SDL_Surface* playAgain;$/;"	m	class:ShowHighScores
+point	pokarm.h	/^    SDL_Rect point;$/;"	m	class:Pokarm
+posCounter	states.h	/^    int posCounter;$/;"	m	class:Intro
+pressMsg	states.h	/^    SDL_Surface* pressMsg;$/;"	m	class:Lose
+render	states.cpp	/^void EnterScore::render() {$/;"	f	class:EnterScore
+render	states.cpp	/^void Intro::render() {$/;"	f	class:Intro
+render	states.cpp	/^void Lose::render() {$/;"	f	class:Lose
+render	states.cpp	/^void Menu::render() {$/;"	f	class:Menu
+render	states.cpp	/^void Option::render() {$/;"	f	class:Option
+render	states.cpp	/^void Play::render() {$/;"	f	class:Play
+render	states.cpp	/^void ShowHighScores::render() {$/;"	f	class:ShowHighScores
+reset_position	pokarm.cpp	/^void Pokarm::reset_position() {$/;"	f	class:Pokarm
+resolution	globals.cpp	/^int resolution[8][2] = {{640, 480}, {800, 600}, {1024, 768}, {1280, 720},$/;"	v
+score	globals.cpp	/^int score = 0;$/;"	v
+score	globals.h	/^    int score;$/;"	m	struct:scoreEntry
+scoreChar	globals.h	/^    char* scoreChar;$/;"	m	struct:scoreEntry
+scoreColor	globals.cpp	/^SDL_Color scoreColor = {0, 255, 0, 0};$/;"	v
+scoreEntry	globals.h	/^typedef struct scoreEntry {$/;"	s
+scoreEntry	globals.h	/^} scoreEntry;$/;"	t	typeref:struct:scoreEntry
+scoresToView	globals.cpp	/^std::string scoresToView[10];$/;"	v
+screen	globals.cpp	/^SDL_Surface *screen = NULL;$/;"	v
+selectSound	states.h	/^    Mix_Chunk* selectSound;$/;"	m	class:Menu
+selectSound	states.h	/^    Mix_Chunk* selectSound;$/;"	m	class:Option
+selectSound	states.h	/^    Mix_Chunk* selectSound;$/;"	m	class:Play
+show	pokarm.cpp	/^void Pokarm::show() {$/;"	f	class:Pokarm
+show	snake.cpp	/^void Snake::show() {$/;"	f	class:Snake
+snakeBody	snake.h	/^    SDL_Rect snakeBody;$/;"	m	class:Snake
+sound	globals.cpp	/^bool sound = true;$/;"	v
+spacebarCounter	states.h	/^    int spacebarCounter;$/;"	m	class:Intro
+start	timer.cpp	/^void Timer::start() {$/;"	f	class:Timer
+startTicks	timer.h	/^    int startTicks;$/;"	m	class:Timer
+started	timer.h	/^    bool started;$/;"	m	class:Timer
+state	globals.cpp	/^int state = NULL_STATE;$/;"	v
+stop	timer.cpp	/^void Timer::stop() {$/;"	f	class:Timer
+switchSound	states.h	/^    Mix_Chunk* switchSound;$/;"	m	class:Menu
+switchSound	states.h	/^    Mix_Chunk* switchSound;$/;"	m	class:Option
+switchSound	states.h	/^    Mix_Chunk* switchSound;$/;"	m	class:Play
+toggle_fullscreen	functions.cpp	/^void toggle_fullscreen(SDL_Surface* screen) {$/;"	f
+unpause	timer.cpp	/^void Timer::unpause() {$/;"	f	class:Timer
+update_high_scores	functions.cpp	/^void update_high_scores() {$/;"	f
+velocity	snake.h	/^    int velocity;$/;"	m	class:Snake
+viewScore	globals.cpp	/^SDL_Surface *viewScore = NULL;$/;"	v
+w	pokarm.h	/^    int w, h;$/;"	m	class:Pokarm
+w	snake.h	/^    int w, h;$/;"	m	class:Snake
+wasMenu	globals.cpp	/^bool wasMenu = false;$/;"	v
+whichBackground	globals.cpp	/^int whichBackground = 0;$/;"	v
+whichRes	globals.cpp	/^int whichRes = 0;$/;"	v
+xFood	globals.cpp	/^int xSnake, ySnake, xFood, yFood;$/;"	v
+xFoodPos	globals.cpp	/^int *xFoodPos, *yFoodPos;$/;"	v
+xPos	pokarm.h	/^    int xPos;$/;"	m	class:Pokarm
+xPos	snake.h	/^    int *xPos, *yPos;$/;"	m	class:Snake
+xSnake	globals.cpp	/^int xSnake, ySnake, xFood, yFood;$/;"	v
+xSnakePos	globals.cpp	/^int *xSnakePos, *ySnakePos;$/;"	v
+xVel	snake.h	/^    int xVel, yVel;$/;"	m	class:Snake
+yFood	globals.cpp	/^int xSnake, ySnake, xFood, yFood;$/;"	v
+yFoodPos	globals.cpp	/^int *xFoodPos, *yFoodPos;$/;"	v
+yPos	pokarm.h	/^    int yPos;$/;"	m	class:Pokarm
+yPos	snake.h	/^    int *xPos, *yPos;$/;"	m	class:Snake
+ySnake	globals.cpp	/^int xSnake, ySnake, xFood, yFood;$/;"	v
+ySnakePos	globals.cpp	/^int *xSnakePos, *ySnakePos;$/;"	v
+yVel	snake.h	/^    int xVel, yVel;$/;"	m	class:Snake
+~EnterScore	states.cpp	/^EnterScore::~EnterScore() {$/;"	f	class:EnterScore
+~GameState	states.h	/^    virtual ~GameState() {$/;"	f	class:GameState
+~Intro	states.cpp	/^Intro::~Intro() {$/;"	f	class:Intro
+~Lose	states.cpp	/^Lose::~Lose() {$/;"	f	class:Lose
+~Menu	states.cpp	/^Menu::~Menu() {$/;"	f	class:Menu
+~Option	states.cpp	/^Option::~Option() {$/;"	f	class:Option
+~Play	states.cpp	/^Play::~Play() {$/;"	f	class:Play
+~ShowHighScores	states.cpp	/^ShowHighScores::~ShowHighScores() {$/;"	f	class:ShowHighScores

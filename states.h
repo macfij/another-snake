@@ -45,7 +45,7 @@ public:
     void handle_events();
     int menu_focus();
 private:
-    menuEntry menuEntries[4];
+    menuEntry* menuEntries;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
 };
@@ -61,7 +61,7 @@ public:
 private:
     Snake moj;
     Pokarm jedzenie;
-    menuEntry pauseEntries[3];
+    menuEntry *pauseEntries;
     Mix_Chunk* eatSound;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;

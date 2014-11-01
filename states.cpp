@@ -14,7 +14,7 @@
 #define OPTIONS_YPOS (0.5*(SCREEN_HEIGHT - 9*optionEntries[0].entry->h))
 #define OPTIONS_H (optionEntries[0].entry->h)
 #define OPTIONS_SPACING (SCREEN_WIDTH/5)
-#define M(c,n,f,v) c##Entries[n].f = v;
+#define M(c,num,field,value) c##Entries[num].field = value;
 
 Intro::Intro() {
     Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -40,10 +40,10 @@ void Intro::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
-                if (spacebarCounter == 0 && posCounter == (SCREEN_WIDTH / float(6.4))) {
+                if (!spacebarCounter && posCounter == (SCREEN_WIDTH / float(6.4))) {
                     nextState = MENU_STATE;
                 }
-                spacebarCounter++;
+                ++spacebarCounter;
             }
             if (spacebarCounter == 1) {
                 posCounter = (SCREEN_WIDTH / float(6.4));
@@ -68,33 +68,26 @@ void Intro::render() {
     msgAnother = TTF_RenderText_Solid(font, "Another", scoreColor);
     msgSnake = TTF_RenderText_Solid(fontBigger, "SNAKE", scoreColor);
     msgSpace = TTF_RenderText_Solid(font, "Press Spacebar", scoreColor);
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
-    apply_surface((SCREEN_WIDTH - msgAnother->w) / 2, posCounter, msgAnother, screen);
-    apply_surface((SCREEN_WIDTH - msgSnake->w) / 2, posCounter + (SCREEN_WIDTH / float(32)), msgSnake, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                 SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
+    apply_surface((SCREEN_WIDTH - msgAnother->w) / 2, 
+                   posCounter, msgAnother, screen);
+    apply_surface((SCREEN_WIDTH - msgSnake->w) / 2, 
+                  posCounter + (SCREEN_WIDTH / float(32)), msgSnake, screen);
     if (posCounter == (SCREEN_WIDTH / float(6.4))) {
-        apply_surface((SCREEN_WIDTH - msgSpace->w) / 2, (SCREEN_WIDTH / float(1.6)), msgSpace, screen);
+        apply_surface((SCREEN_WIDTH - msgSpace->w) / 2, 
+                      (SCREEN_WIDTH / float(1.6)), msgSpace, screen);
     }
 }
 
 Menu::Menu() {
+    menuEntries = new menuEntry[4];
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
-    M(menu,0,msg,"NEW GAME")
-    menuEntries[0].color = focusOnColor;
-    menuEntries[0].entry = NULL;
-    menuEntries[0].isFocused = true;
-    menuEntries[1].msg = "Options";
-    menuEntries[1].entry = NULL;
-    menuEntries[1].isFocused = false;
-    menuEntries[1].color = scoreColor;
-    menuEntries[2].msg = "High Scores";
-    menuEntries[2].entry = NULL;
-    menuEntries[2].isFocused = false;
-    menuEntries[2].color = scoreColor;
-    menuEntries[3].msg = "Exit";
-    menuEntries[3].entry = NULL;
-    menuEntries[3].isFocused = false;
-    menuEntries[3].color = scoreColor;
+    menuEntries[0] = menuEntry("NEW GAME", true, NULL, focusOnColor);
+    menuEntries[1] = menuEntry("Options", false, NULL, scoreColor);
+    menuEntries[2] = menuEntry("High Scores", false, NULL, scoreColor);
+    menuEntries[3] = menuEntry("Exit", false, NULL, scoreColor);
     handle_high_scores();
     update_high_scores();
 }
@@ -102,11 +95,10 @@ Menu::Menu() {
 Menu::~Menu() {
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
+    delete [] menuEntries;
 }
 
-void Menu::logic() {
-
-}
+void Menu::logic() {}
 
 void Menu::handle_events() {
     while (SDL_PollEvent(&event)) {
@@ -117,7 +109,8 @@ void Menu::handle_events() {
         if (event.type == SDL_KEYDOWN) {
             switch (menu_focus()) {
             case 0:
-                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                if (event.key.keysym.sym == SDLK_UP || 
+                    event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[0].entry);
                     menuEntries[0].msg = "New Game";
                     menuEntries[0].isFocused = false;
@@ -150,7 +143,8 @@ void Menu::handle_events() {
                 }
                 break;
             case 1:
-                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                if (event.key.keysym.sym == SDLK_UP ||
+                    event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[1].entry);
                     menuEntries[1].msg = "Options";
                     menuEntries[1].isFocused = false;
@@ -183,7 +177,8 @@ void Menu::handle_events() {
                 }
                 break;
             case 2:
-                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                if (event.key.keysym.sym == SDLK_UP || 
+                    event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[2].entry);
                     menuEntries[2].msg = "High Scores";
                     menuEntries[2].color = scoreColor;
@@ -217,7 +212,8 @@ void Menu::handle_events() {
                 }
                 break;
             case 3:
-                if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                if (event.key.keysym.sym == SDLK_UP || 
+                    event.key.keysym.sym == SDLK_DOWN) {
                     SDL_FreeSurface(menuEntries[3].entry);
                     menuEntries[3].msg = "Exit";
                     menuEntries[3].isFocused = false;
@@ -257,18 +253,10 @@ void Menu::handle_events() {
 }
 
 int Menu::menu_focus() {
-    if (menuEntries[0].isFocused == true) {
-        return 0;
-    }
-    else if (menuEntries[1].isFocused == true) {
-        return 1;
-    }
-    else if (menuEntries[2].isFocused == true) {
-        return 2;
-    }
-    else {
-        return 3;
-    }
+    if (menuEntries[0].isFocused) { return 0; }
+    else if (menuEntries[1].isFocused) { return 1; }
+    else if (menuEntries[2].isFocused) { return 2; }
+    else { return 3; }
 }
 
 void Menu::render() {
@@ -279,22 +267,23 @@ void Menu::render() {
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     if (menuEntries[0].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[0].entry->w) / 2,
-                ((SCREEN_HEIGHT - menuEntries[0].entry->h) / 2) - (SCREEN_WIDTH / float(16)), menuEntries[0].entry,
-                screen);
+                      ((SCREEN_HEIGHT - menuEntries[0].entry->h) / 2) - 
+                      (SCREEN_WIDTH / float(16)), menuEntries[0].entry, screen);
     }
     if (menuEntries[1].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[1].entry->w) / 2,
-                ((SCREEN_HEIGHT - menuEntries[1].entry->h) / 2) - (SCREEN_WIDTH / float(32)), menuEntries[1].entry,
-                screen);
+                      ((SCREEN_HEIGHT - menuEntries[1].entry->h) / 2) - 
+                      (SCREEN_WIDTH / float(32)), menuEntries[1].entry, screen);
     }
     if (menuEntries[2].entry != NULL) {
-        apply_surface((SCREEN_WIDTH - menuEntries[2].entry->w) / 2, ((SCREEN_HEIGHT - menuEntries[2].entry->h) / 2),
-                menuEntries[2].entry, screen);
+        apply_surface((SCREEN_WIDTH - menuEntries[2].entry->w) / 2, 
+                      ((SCREEN_HEIGHT - menuEntries[2].entry->h) / 2),
+                      menuEntries[2].entry, screen);
     }
     if (menuEntries[3].entry != NULL) {
         apply_surface((SCREEN_WIDTH - menuEntries[3].entry->w) / 2,
-                ((SCREEN_HEIGHT - menuEntries[3].entry->h) / 2) + (SCREEN_WIDTH / float(32)), menuEntries[3].entry,
-                screen);
+                      ((SCREEN_HEIGHT - menuEntries[3].entry->h) / 2) + 
+                      (SCREEN_WIDTH / float(32)), menuEntries[3].entry, screen);
     }
 }
 
@@ -336,7 +325,7 @@ Option::Option() {
     optionEntries[6].msg[1] = "BACKGROUND";
     optionEntries[6].entry = NULL;
     optionEntries[6].isFocused = false;
-    optionEntries[6].entry;
+    optionEntries[6].entry = NULL;
     optionEntries[6].color = scoreColor;
     optionEntries[7].msg[0] = "Exit";
     optionEntries[7].msg[1] = "EXIT";
@@ -461,8 +450,8 @@ void Option::handle_events() {
                         toggle_fullscreen(screen);
                     }
                     else if (fullscreen == false) {
-                        screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,
-                                SDL_SWSURFACE);
+                        screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT,
+                                                  SCREEN_BPP, SDL_SWSURFACE);
                     }
                     font = TTF_OpenFont("fonts/Munro.ttf", FONT_SIZE);
                     fontBigger = TTF_OpenFont("fonts/Munro.ttf", BIGGER_FONT_SIZE);
@@ -483,8 +472,9 @@ int Option::option_focus() {
 
 void Option::render() {
     for (int i = 0; i < 8; i++) {
-        optionEntries[i].entry = TTF_RenderText_Solid(font, optionEntries[i].msg[optionEntries[i].isFocused],
-                    optionEntries[i].color);
+        optionEntries[i].entry = TTF_RenderText_Solid(font, 
+                                 optionEntries[i].msg[optionEntries[i].isFocused], 
+                                 optionEntries[i].color);
     }
 
     //TO-DO:
@@ -559,11 +549,15 @@ void Option::render() {
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
     for (int i = 0; i < 8; i++) {
         if (optionEntries[i].entry != NULL) {
-            apply_surface((SCREEN_WIDTH - optionEntries[0].entry->w - (SCREEN_WIDTH / 10)) / 2, OPTIONS_YPOS + i * OPTIONS_H, optionEntries[i].entry, screen);
+            apply_surface((SCREEN_WIDTH - optionEntries[0].entry->w - 
+                          (SCREEN_WIDTH / 10)) / 2, OPTIONS_YPOS + i * OPTIONS_H,
+                          optionEntries[i].entry, screen);
         }
         if (i < 7) {
             if (optionValues[i] != NULL) {
-                apply_surface(OPTIONS_XPOS + OPTIONS_SPACING, OPTIONS_YPOS + i * OPTIONS_H, optionValues[i], screen);
+                apply_surface(OPTIONS_XPOS + OPTIONS_SPACING, 
+                              OPTIONS_YPOS + i * OPTIONS_H, 
+                              optionValues[i], screen);
             }
         }
     }
@@ -600,7 +594,7 @@ void Lose::handle_events() {
             Mix_CloseAudio();
             state = EXIT_STATE;
         }
-        if ((event.type == SDL_KEYDOWN)) {
+        if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
                 nextState = PLAY_STATE;
             }
@@ -617,18 +611,23 @@ Play::Play() {
     xFoodPos = &xFood;
     yFoodPos = &yFood;
     handle_high_scores();
-    pauseEntries[0].color = focusOnColor;
-    pauseEntries[0].entry = NULL;
-    pauseEntries[0].isFocused = true;
-    pauseEntries[0].msg = "CONTINUE";
-    pauseEntries[1].msg = "Main Menu";
-    pauseEntries[1].color = scoreColor;
-    pauseEntries[1].isFocused = false;
-    pauseEntries[1].entry = NULL;
-    pauseEntries[2].color = scoreColor;
-    pauseEntries[2].entry = NULL;
-    pauseEntries[2].isFocused = false;
-    pauseEntries[2].msg = "Exit";
+    pauseEntries = new menuEntry[3];
+    pauseEntries[0] = menuEntry("CONTINUE", true, NULL, focusOnColor);
+    pauseEntries[1] = menuEntry("Main Menu", false, NULL, scoreColor);
+    pauseEntries[2] = menuEntry("Exit", false, NULL, scoreColor);
+//    pauseEntries = { {"CONTINUE", true, NULL, focusOnColor} , {"Main Menu", false, NULL, scoreColor}, {"Exit", false, NULL, scoreColor} };
+//    pauseEntries[0].color = focusOnColor;
+//    pauseEntries[0].entry = NULL;
+//    pauseEntries[0].isFocused = true;
+//    pauseEntries[0].msg = "CONTINUE";
+//    pauseEntries[1].msg = "Main Menu";
+//    pauseEntries[1].color = scoreColor;
+//    pauseEntries[1].isFocused = false;
+//    pauseEntries[1].entry = NULL;
+//    pauseEntries[2].color = scoreColor;
+//    pauseEntries[2].entry = NULL;
+//    pauseEntries[2].isFocused = false;
+//    pauseEntries[2].msg = "Exit";
     eatSound = Mix_LoadWAV("sounds/eat.wav");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
@@ -662,7 +661,8 @@ void Play::handle_events() {
                         nextState = MENU_STATE;
                         score = 0;
                     }
-                    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                    if (event.key.keysym.sym == SDLK_UP || 
+                        event.key.keysym.sym == SDLK_DOWN) {
                         SDL_FreeSurface(pauseEntries[1].entry);
                         pauseEntries[1].msg = "Main Menu";
                         pauseEntries[1].color = scoreColor;
@@ -691,7 +691,8 @@ void Play::handle_events() {
                         }
                         paused = false;
                     }
-                    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+                    if (event.key.keysym.sym == SDLK_UP || 
+                        event.key.keysym.sym == SDLK_DOWN) {
                         SDL_FreeSurface(pauseEntries[0].entry);
                         pauseEntries[0].msg = "Continue";
                         pauseEntries[0].isFocused = false;
@@ -722,7 +723,8 @@ void Play::handle_events() {
                         Mix_CloseAudio();
                         nextState = EXIT_STATE;
                     }
-                    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_UP) {
+                    if (event.key.keysym.sym == SDLK_DOWN || 
+                        event.key.keysym.sym == SDLK_UP) {
                         SDL_FreeSurface(pauseEntries[2].entry);
                         pauseEntries[2].msg = "Exit";
                         pauseEntries[2].isFocused = false;
@@ -752,23 +754,20 @@ void Play::handle_events() {
 }
 
 int Play::pause_focus() {
-    if (pauseEntries[1].isFocused == true) {
-        return 2;
-    }
-    if (pauseEntries[0].isFocused == true) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    if (pauseEntries[1].isFocused) { return 2; }
+    if (pauseEntries[0].isFocused) { return 1; }
+    else { return 0; }
 }
 
 void Play::logic() {
     if (paused == false) {
         moj.move();
     }
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, backgrounds[whichBackground][0], backgrounds[whichBackground][1],
-            backgrounds[whichBackground][2]));
+    SDL_FillRect(screen, &screen->clip_rect,
+                 SDL_MapRGB(screen->format, backgrounds[whichBackground][0], 
+                            backgrounds[whichBackground][1],
+                            backgrounds[whichBackground][2])
+                );
     jedzenie.get_position(xFoodPos, yFoodPos);
     moj.get_position(xSnakePos, ySnakePos);
     moj.mouth_open(moj.get_dir(), xSnake, ySnake, xFood, yFood);
@@ -859,17 +858,21 @@ void EnterScore::handle_events() {
                 nextState = HIGH_SCORES_STATE;
             }
             if (nameContainer.length() <= 14) {
-                if ((event.key.keysym.unicode >= (Uint16) '0') && (event.key.keysym.unicode <= (Uint16) '9')) {
+                if ((event.key.keysym.unicode >= (Uint16) '0') && 
+                    (event.key.keysym.unicode <= (Uint16) '9')) {
                     nameContainer += (char) event.key.keysym.unicode;
                 }
-                else if ((event.key.keysym.unicode >= (Uint16) 'A') && (event.key.keysym.unicode <= (Uint16) 'Z')) {
+                else if ((event.key.keysym.unicode >= (Uint16) 'A') && 
+                         (event.key.keysym.unicode <= (Uint16) 'Z')) {
                     nameContainer += (char) event.key.keysym.unicode;
                 }
-                else if ((event.key.keysym.unicode >= (Uint16) 'a') && (event.key.keysym.unicode <= (Uint16) 'z')) {
+                else if ((event.key.keysym.unicode >= (Uint16) 'a') && 
+                         (event.key.keysym.unicode <= (Uint16) 'z')) {
                     nameContainer += (char) event.key.keysym.unicode;
                 }
             }
-            if ((event.key.keysym.sym == SDLK_BACKSPACE) && (nameContainer.length() > 0)) {
+            if ((event.key.keysym.sym == SDLK_BACKSPACE) && 
+                (nameContainer.length() > 0)) {
                 nameContainer.erase(nameContainer.length() - 1);
             }
             if (nameContainer != tmp) {
@@ -883,10 +886,12 @@ void EnterScore::handle_events() {
 void EnterScore::render() {
     message = TTF_RenderText_Solid(font, "New high score! enter name:", scoreColor);
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
-    apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
+    apply_surface((SCREEN_WIDTH - message->w) / 2,
+                  ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
     if (name != NULL) {
-        apply_surface((SCREEN_WIDTH - name->w) / 2, (((SCREEN_HEIGHT / 2) - name->h) / 2) + (SCREEN_WIDTH / float(6.4)),
-                name, screen);
+        apply_surface((SCREEN_WIDTH - name->w) / 2, 
+                      (((SCREEN_HEIGHT / 2) - name->h) / 2) + 
+                      (SCREEN_WIDTH / float(6.4)), name, screen);
     }
 }
 
@@ -939,32 +944,42 @@ void ShowHighScores::handle_events() {
 
 void ShowHighScores::render() {
     message = TTF_RenderText_Solid(font, "High Scores", scoreColor);
-    if (wasMenu == false) {
-        playAgain = TTF_RenderText_Solid(font, "Press spacebar to play again", scoreColor);
+    if (!wasMenu) {
+        playAgain = TTF_RenderText_Solid(font, 
+                                         "Press spacebar to play again", 
+                                         scoreColor);
     }
-    else if (wasMenu == true) {
-        playAgain = TTF_RenderText_Solid(font, "Press spacebar to go back to main menu", scoreColor);
+    else if (wasMenu) {
+        playAgain = TTF_RenderText_Solid(font, 
+                                         "Press spacebar to go back to main menu", 
+                                         scoreColor);
     }
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
-    apply_surface((SCREEN_WIDTH - message->w) / 2, (((SCREEN_HEIGHT / 2) - message->h) / 2) - (SCREEN_WIDTH / float(9)),
-            message, screen);
-    apply_surface((SCREEN_WIDTH - playAgain->w) / 2, (SCREEN_WIDTH / float(1.6)), playAgain, screen);
+    SDL_FillRect(screen, &screen->clip_rect, 
+                 SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
+    apply_surface((SCREEN_WIDTH - message->w) / 2, 
+                  (((SCREEN_HEIGHT / 2) - message->h) / 2) - 
+                  (SCREEN_WIDTH / float(9)), message, screen);
+    apply_surface((SCREEN_WIDTH - playAgain->w) / 2, 
+                  (SCREEN_WIDTH / float(1.6)), playAgain, screen);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; ++i) {
         entries[i][0] = TTF_RenderText_Solid(font, highScores[i].count, scoreColor);
         entries[i][1] = TTF_RenderText_Solid(font, highScores[i].name.c_str(), scoreColor);
         entries[i][2] = TTF_RenderText_Solid(font, highScores[i].scoreChar, scoreColor);
         if (entries[i][0] != NULL) {
-            apply_surface((SCREEN_WIDTH / float(3.2)), (SCREEN_WIDTH / float(6.4)) + (i * (SCREEN_WIDTH / float(32))),
-                    entries[i][0], screen);
+            apply_surface((SCREEN_WIDTH / float(3.2)), 
+                          (SCREEN_WIDTH / float(6.4)) +
+                          (i * (SCREEN_WIDTH / float(32))), entries[i][0], screen);
         }
         if (entries[i][1] != NULL) {
             apply_surface((SCREEN_WIDTH / float(3.2)) + (SCREEN_WIDTH / float(12.8)),
-                    (SCREEN_WIDTH / float(6.4)) + (i * (SCREEN_WIDTH / float(32))), entries[i][1], screen);
+                          (SCREEN_WIDTH / float(6.4)) + (i * (SCREEN_WIDTH / float(32))),
+                          entries[i][1], screen);
         }
         if (entries[i][2] != NULL) {
             apply_surface((SCREEN_WIDTH / float(3.2)) + (SCREEN_WIDTH / float(3.2)),
-                    (SCREEN_WIDTH / float(6.4)) + (i * (SCREEN_WIDTH / float(32))), entries[i][2], screen);
+                          (SCREEN_WIDTH / float(6.4)) + (i * (SCREEN_WIDTH / float(32))),
+                          entries[i][2], screen);
         }
     }
 }

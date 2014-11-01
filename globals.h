@@ -8,15 +8,15 @@
 #include <string>
 
 enum PossibleStates{
-	NULL_STATE,
-	INTRO_STATE,
-	MENU_STATE,
-	OPTION_STATE,
-	PLAY_STATE,
-	LOSE_STATE,
-	ENTRY_SCORE_STATE,
-	HIGH_SCORES_STATE,
-	EXIT_STATE,
+    NULL_STATE,
+    INTRO_STATE,
+    MENU_STATE,
+    OPTION_STATE,
+    PLAY_STATE,
+    LOSE_STATE,
+    ENTRY_SCORE_STATE,
+    HIGH_SCORES_STATE,
+    EXIT_STATE,
 };
 
 typedef struct scoreEntry {
@@ -26,12 +26,17 @@ typedef struct scoreEntry {
     char* scoreChar;
 } scoreEntry;
 
-typedef struct menuEntry {
+class menuEntry {
+public:
     const char* msg;
     bool isFocused;
     SDL_Surface* entry;
     SDL_Color color;
-} menuEntry;
+    menuEntry() : msg(NULL), isFocused(false), entry(NULL), color({0,0,0,0}) {}
+    menuEntry(const char* msg_, bool isFocused_, 
+              SDL_Surface* entry_, SDL_Color color_) : 
+              msg(msg_), isFocused(isFocused_), entry(entry_), color(color_) {}
+};
 
 typedef struct optionEntry {
     const char* msg[2];
