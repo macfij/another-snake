@@ -38,12 +38,22 @@ public:
               msg(msg_), isFocused(isFocused_), entry(entry_), color(color_) {}
 };
 
-typedef struct optionEntry {
+class optionEntry {
+public:
     const char* msg[2];
     bool isFocused;
     SDL_Surface* entry;
     SDL_Color color;
-} optionEntry;
+    optionEntry() : isFocused(false), entry(NULL), color({0,0,0,0}) {
+        msg[0] = NULL;
+        msg[1] = NULL;
+    }
+    optionEntry(const char* msg1, const char* msg2, bool foc, SDL_Surface* en,
+                SDL_Color col) : isFocused(foc), entry(en), color(col) {
+        msg[0] = msg1;
+        msg[1] = msg2;
+    }
+};
 
 extern scoreEntry highScores[10];
 
