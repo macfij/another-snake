@@ -12,10 +12,6 @@ Features
 - wsad/arrows snake control
 - background black/white
 
-Source code
-===========
-Commit history : https://bitbucket.org/zespolwonsza/another-snake/commits/branch/master
-
 Authors
 =======
 - Jakub Rewieński
