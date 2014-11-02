@@ -303,6 +303,7 @@ Option::Option() {
 }
 
 Option::~Option() {
+    delete [] optionEntries;
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
 }
