@@ -14,6 +14,11 @@ Features
 - wsad/arrows snake control
 - background black/white
 
+Snake changes his color based on coordinates. He has some similiarities with chameleon.
+Image below presents snake just before his lunch. See how colorful he is?
+
+![alt_tag](https://github.com/macfij/another-snake/blob/master/images/snake_game.png)
+
 Authors
 =======
 - Jakub Rewieński
