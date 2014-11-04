@@ -1,6 +1,8 @@
 Another SNAKE
 =============
 
+![alt tag](https://github.com/macfij/another-snake/blob/master/images/snake_in.png)
+
 This is a snake game made for fun by two programming noobs.
 Linux, C++, SDL.
 
