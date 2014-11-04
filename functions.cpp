@@ -98,8 +98,8 @@ int cmpfunc(const void* a, const void* b) {
 void handle_high_scores() {
     std::ifstream f("highscores.txt");
     for (int i = 0; i < 10; i++) {
-        highScores[i].count = (char*)malloc(sizeof(char) * 3);
-        highScores[i].scoreChar = (char*)malloc(sizeof(char) * 5);
+        highScores[i].count = (char*)malloc(sizeof(char) * 4);
+        highScores[i].scoreChar = (char*)malloc(sizeof(char) * 6);
         f >> highScores[i].name >> highScores[i].score;
         sprintf(highScores[i].count, "%d.", i+1);
         sprintf(highScores[i].scoreChar, "%d", highScores[i].score);

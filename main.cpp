@@ -46,7 +46,7 @@ void change_state() {
     }
 }
 
-int main(int argc, char* args[]) {
+int main() {
 
     if (init() == false) {
         return 1;
@@ -74,6 +74,7 @@ int main(int argc, char* args[]) {
             SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
         }
     }
+    delete currState;
     clean_up();
     return 0;
 }

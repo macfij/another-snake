@@ -21,7 +21,7 @@ Snake::Snake() {
     velocity = SNAKE_CELL_SIZE + SNAKE_CELL_SEPARATION;
     xPos = new int[length];
     yPos = new int[length];
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; ++i) {
         *(xPos+i) = 0.5*SCREEN_WIDTH - (((int)(0.5*SCREEN_WIDTH)) % velocity);
         *(yPos+i) = 0.5*SCREEN_HEIGHT - (((int)(0.5*SCREEN_HEIGHT)) % velocity);
     }
@@ -30,8 +30,13 @@ Snake::Snake() {
     direction = RIGHT;
 }
 
+Snake::~Snake() {
+    delete [] xPos;
+    delete [] yPos;
+}
+
 bool Snake::check_collision() {
-    for (int j = 1; j < length; j++) {
+    for (int j = 1; j < length; ++j) {
         if (xPos[0] == xPos[j] && yPos[0] == yPos[j]) {
             return true;
         }
@@ -46,6 +51,9 @@ bool Snake::check_collision() {
    Pressing 'f' button opens and closes snakes mouth.
    */
 void Snake::handle_input() {
+    // TODO: this is just ugly way to handle snake's controls. What if I
+    // want to add another set of keys to control snake? Another redundant
+    // code? DO something with it.
     if (event.type == SDL_KEYDOWN) {
         if (isArrow) {
             switch (event.key.keysym.sym) {
@@ -376,7 +384,7 @@ void Snake::get_position(int* x, int* y) {
    Finally, the old snake is deleted.
    */
 void Snake::grow() {
-    length++;
+    ++length;
 
     int* xOld = xPos;
     int* yOld = yPos;
@@ -384,12 +392,12 @@ void Snake::grow() {
     int* xNew = new int[length];
     int* yNew = new int[length];
 
-    for (int i = 0; i < length - 1; i++) {
-        *(xNew + i) = *(xPos + i);
-        *(yNew + i) = *(yPos + i);
+    for (int i = 0; i < length - 1; ++i) {
+        xNew[i] = xPos[i];
+        yNew[i] = yPos[i];
     }
-    *(xNew + length - 1) = *(xNew + length - 2);
-    *(yNew + length - 1) = *(yNew + length - 2);
+    xNew[length - 1] = xNew[length - 2];
+    yNew[length - 1] = yNew[length - 2];
 
     xPos = xNew;
     yPos = yNew;

@@ -19,8 +19,10 @@ private:
     bool open;
     int faceVar;
     Directions direction;
+    //SDLKey ctrls[4];
 public:
     Snake();
+    ~Snake();
     void handle_input();
     void move();
     void show();

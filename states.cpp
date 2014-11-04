@@ -95,6 +95,9 @@ Menu::Menu() {
 Menu::~Menu() {
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
+    for (int i = 0; i < 4; ++i) {
+        SDL_FreeSurface(menuEntries[i].entry);
+    }
     delete [] menuEntries;
 }
 
@@ -303,6 +306,9 @@ Option::Option() {
 }
 
 Option::~Option() {
+    for (int i = 0; i < 8; ++i) {
+        SDL_FreeSurface(optionEntries[i].entry);
+    }
     delete [] optionEntries;
     Mix_FreeChunk(selectSound);
     Mix_FreeChunk(switchSound);
@@ -324,7 +330,8 @@ void Option::handle_events() {
         if (event.type == SDL_KEYDOWN) {
 
             optionPosition = option_focus();
-            if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+            if (event.key.keysym.sym == SDLK_UP ||
+                event.key.keysym.sym == SDLK_DOWN) {
                 if (sound) {
                     Mix_PlayChannel(-1, switchSound, 0);
                 }
@@ -332,13 +339,13 @@ void Option::handle_events() {
                 optionEntries[optionPosition].color = scoreColor;
                 if (event.key.keysym.sym == SDLK_UP) {
                     if (optionPosition > 0)
-                        optionPosition--;
+                        --optionPosition;
                     else
                         optionPosition = 7;
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     if (optionPosition < 7)
-                        optionPosition++;
+                        ++optionPosition;
                     else
                         optionPosition = 0;
                 }
@@ -501,7 +508,7 @@ void Option::render() {
         else
             optionValues[5] = TTF_RenderText_Solid(font, "Wsad", optionEntries[5].color);
     }
-    if (whichBackground == 0) {
+    if (!whichBackground) {
         if (optionEntries[6].isFocused)
             optionValues[6] = TTF_RenderText_Solid(font, "BLACK", optionEntries[6].color);
         else
@@ -551,10 +558,14 @@ void Lose::render() {
     loseMsg = TTF_RenderText_Solid(fontBigger, "YOU LOSE!", scoreColor);
     pressMsg = TTF_RenderText_Solid(font, "Press Spacebar", scoreColor);
     againMsg = TTF_RenderText_Solid(font, "to play again", scoreColor);
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
-    apply_surface((SCREEN_WIDTH - loseMsg->w) / 2, (SCREEN_WIDTH / float(6.4)), loseMsg, screen);
-    apply_surface((SCREEN_WIDTH - pressMsg->w) / 2, (SCREEN_WIDTH / float(4.25)), pressMsg, screen);
-    apply_surface((SCREEN_WIDTH - againMsg->w) / 2, (SCREEN_WIDTH / float(3.7)), againMsg, screen);
+    SDL_FillRect(screen, &screen->clip_rect,
+                 SDL_MapRGB(screen->format, 0x01, 0x01, 0x01));
+    apply_surface((SCREEN_WIDTH - loseMsg->w) / 2,
+                  (SCREEN_WIDTH / float(6.4)), loseMsg, screen);
+    apply_surface((SCREEN_WIDTH - pressMsg->w) / 2,
+                  (SCREEN_WIDTH / float(4.25)), pressMsg, screen);
+    apply_surface((SCREEN_WIDTH - againMsg->w) / 2,
+                  (SCREEN_WIDTH / float(3.7)), againMsg, screen);
 }
 
 void Lose::handle_events() {
@@ -575,6 +586,7 @@ void Lose::handle_events() {
 }
 
 Play::Play() {
+    Snake moj;
     xSnakePos = &xSnake;
     ySnakePos = &ySnake;
     xFoodPos = &xFood;
@@ -584,19 +596,6 @@ Play::Play() {
     pauseEntries[0] = menuEntry("CONTINUE", true, NULL, focusOnColor);
     pauseEntries[1] = menuEntry("Main Menu", false, NULL, scoreColor);
     pauseEntries[2] = menuEntry("Exit", false, NULL, scoreColor);
-//    pauseEntries = { {"CONTINUE", true, NULL, focusOnColor} , {"Main Menu", false, NULL, scoreColor}, {"Exit", false, NULL, scoreColor} };
-//    pauseEntries[0].color = focusOnColor;
-//    pauseEntries[0].entry = NULL;
-//    pauseEntries[0].isFocused = true;
-//    pauseEntries[0].msg = "CONTINUE";
-//    pauseEntries[1].msg = "Main Menu";
-//    pauseEntries[1].color = scoreColor;
-//    pauseEntries[1].isFocused = false;
-//    pauseEntries[1].entry = NULL;
-//    pauseEntries[2].color = scoreColor;
-//    pauseEntries[2].entry = NULL;
-//    pauseEntries[2].isFocused = false;
-//    pauseEntries[2].msg = "Exit";
     eatSound = Mix_LoadWAV("sounds/eat.wav");
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
@@ -604,6 +603,10 @@ Play::Play() {
 }
 
 Play::~Play() {
+    for (int i = 0; i < 3; ++i) {
+        SDL_FreeSurface(pauseEntries[i].entry);
+    }
+    delete [] pauseEntries;
     Mix_FreeChunk(eatSound);
     Mix_FreeChunk(switchSound);
     Mix_FreeChunk(selectSound);
@@ -617,7 +620,7 @@ void Play::handle_events() {
             Mix_CloseAudio();
             nextState = EXIT_STATE;
         }
-        if (paused == true) {
+        if (paused) {
             if (event.type == SDL_KEYDOWN) {
                 switch (pause_focus()) {
                 case 2:  // main menu
@@ -789,7 +792,7 @@ void Play::render() {
                     pauseEntries[2].entry, screen);
         }
     }
-    else if (paused == false) {
+    else if (!paused) {
         viewScore = TTF_RenderText_Solid(font, convert_int_to_char(score, buffer), scoreColor);
         apply_surface((SCREEN_WIDTH / float(2.3)), (SCREEN_WIDTH / float(32)), viewScore, screen);
         moj.show();
@@ -896,10 +899,10 @@ void ShowHighScores::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_SPACE) {
-                if (wasMenu == false) {
+                if (!wasMenu) {
                     nextState = PLAY_STATE;
                 }
-                else if (wasMenu == true) {
+                else if (wasMenu) {
                     nextState = MENU_STATE;
                     wasMenu = false;
                 }
