@@ -48,17 +48,10 @@ void change_state() {
 
 int main() {
 
-    if (init() == false) {
-        return 1;
-    }
-    if (load_files() == false) {
-        return 1;
-    }
+    if (!init() || !load_files()) return 1;
 
     currState = new Intro();
     state = INTRO_STATE;
-
-
 
     while (state != EXIT_STATE) {
         fps.start();

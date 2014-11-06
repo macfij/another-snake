@@ -8,6 +8,7 @@
 #include "snake.h"
 #include "pokarm.h"
 #include <string>
+#include <sstream>
 
 class GameState {
 public:
@@ -66,6 +67,7 @@ private:
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
     Mix_Chunk* deathSound;
+    Mix_Music* ericMusic;
 };
 
 class Option: public GameState {
@@ -80,9 +82,12 @@ public:
 private:
     int optionPosition;
     optionEntry* optionEntries;
-    SDL_Surface* optionValues[7];
+    //optionValue* vals;
+    std::vector<optionValue*> vals;
     Mix_Chunk* switchSound;
     Mix_Chunk* selectSound;
+    std::stringstream ss;
+    std::string str;
 };
 
 class Lose: public GameState {

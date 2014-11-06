@@ -6,6 +6,17 @@
 #include "SDL/SDL_ttf.h"
 #include "timer.h"
 #include <string>
+#include <stdlib.h>
+#include <vector>
+#include <boost/lexical_cast.hpp>
+
+using boost::lexical_cast;
+
+
+#define FONT_SIZE (SCREEN_WIDTH/float(25.6))
+#define BIGGER_FONT_SIZE (SCREEN_WIDTH/float(14.2))
+extern TTF_Font* font;
+extern TTF_Font* fontBigger;
 
 enum PossibleStates{
     NULL_STATE,
@@ -36,6 +47,11 @@ public:
     menuEntry(const char* msg_, bool isFocused_, 
               SDL_Surface* entry_, SDL_Color color_) : 
               msg(msg_), isFocused(isFocused_), entry(entry_), color(color_) {}
+    void update_state(const char* msgNew, bool focusNew, SDL_Color colorNew) {
+        msg = msgNew;
+        isFocused = focusNew;
+        color = colorNew;
+    }
 };
 
 class optionEntry {
@@ -55,20 +71,55 @@ public:
     }
 };
 
+class optionValue {
+public:
+    std::string curr;
+    SDL_Surface* entry;
+    bool enab;
+    std::vector<std::string> msg;
+    optionValue() : entry(NULL) {}
+    optionValue(const char* m1, const char* m2, const char* m3, const char* m4,
+                int idx, SDL_Color c, bool f) : enab(f) {
+        msg.push_back(lexical_cast<std::string>(m1));
+        msg.push_back(lexical_cast<std::string>(m2));
+        msg.push_back(lexical_cast<std::string>(m3));
+        msg.push_back(lexical_cast<std::string>(m4));
+        fill_surface(idx, c);
+    }
+    optionValue(int m1, int idx, SDL_Color c, bool f) : enab(f) {
+        msg.push_back(lexical_cast<std::string>(m1));
+        fill_surface(idx, c);
+    }
+    optionValue(int m1, int m2, int idx, SDL_Color c, bool f) : enab(f) {
+        msg.push_back(lexical_cast<std::string>(m1) + "x" +
+                      lexical_cast<std::string>(m2));
+        fill_surface(idx, c);
+    }
+    optionValue(const char* m1, int idx, SDL_Color c, bool f) : enab(f) {
+        msg.push_back(lexical_cast<std::string>(m1));
+        fill_surface(idx, c);
+    }
+    void fill_surface(int idx, SDL_Color c) {
+        this->curr = this->msg[idx];
+        this->entry = TTF_RenderText_Solid(font, 
+                                           const_cast<const char*>(this->curr.c_str()),
+                                           c);
+
+    }
+};
+
 extern scoreEntry highScores[10];
 
-extern SDL_Surface *screen;
+extern SDL_Surface* screen;
 extern SDL_Event event;
-extern TTF_Font *font;
-extern TTF_Font *fontBigger;
-extern SDL_Surface *viewScore;
+extern SDL_Surface* viewScore;
 extern SDL_Color scoreColor;
 extern SDL_Color focusOnColor;
 extern int score;
 
-extern int *xFoodPos, *yFoodPos;
+extern int* xFoodPos,* yFoodPos;
 extern int xSnake, ySnake, xFood, yFood;
-extern int *xSnakePos, *ySnakePos;
+extern int* xSnakePos,* ySnakePos;
 
 extern int frame;
 extern bool cap;
@@ -95,9 +146,6 @@ extern int resolution[8][2];
 extern int whichRes;
 
 extern Uint8 backgrounds[2][3];
-extern int whichBackground;
-
-#define FONT_SIZE (SCREEN_WIDTH/float(25.6))
-#define BIGGER_FONT_SIZE (SCREEN_WIDTH/float(14.2))
+extern bool whichBackground;
 
 #endif

@@ -3,16 +3,16 @@
 #include "globals.h"
 
 SDL_Event event;
-SDL_Surface *screen = NULL;
-TTF_Font *font = NULL;
-TTF_Font *fontBigger = NULL;
-SDL_Surface *viewScore = NULL;
+SDL_Surface* screen = NULL;
+TTF_Font* font = NULL;
+TTF_Font* fontBigger = NULL;
+SDL_Surface* viewScore = NULL;
 SDL_Color scoreColor = {0, 255, 0, 0};
-SDL_Color focusOnColor = {255, 255, 255};
+SDL_Color focusOnColor = {255, 255, 255, 0};
 
-int *xFoodPos, *yFoodPos;
+int* xFoodPos,* yFoodPos;
 int xSnake, ySnake, xFood, yFood;
-int *xSnakePos, *ySnakePos;
+int* xSnakePos,* ySnakePos;
 int score = 0;
 int frame = 0;
 bool cap = true;
@@ -45,4 +45,4 @@ bool fullscreen = false;
 bool isArrow = false;
 
 Uint8 backgrounds[2][3] = {{0x01, 0x01, 0x01},{0xFF, 0xFF, 0xFF}};
-int whichBackground = 0;
+bool whichBackground = false;
