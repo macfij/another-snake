@@ -603,7 +603,7 @@ Play::Play() {
     switchSound = Mix_LoadWAV("sounds/switch.wav");
     selectSound = Mix_LoadWAV("sounds/selected.wav");
     deathSound = Mix_LoadWAV("sounds/death.wav");
-    ericMusic = Mix_LoadMUS("sounds/eric_dizzy.wav");
+    ericMusic = Mix_LoadMUS("sounds/eric_dizzy.ogg");
 }
 
 Play::~Play() {

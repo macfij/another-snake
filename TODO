@@ -6,6 +6,7 @@ STATUS TODO:
 - Provide a better class design related to option and menu SDL_Surfaces.
 - Use more boost?
 - rewrite project with SDL 2.0.
+- Add support to vim controls (hjkl).
 
 STATUS DONE:
 - remove memory leaks caused by calling TTF_RenderTextSolid() in render()
