@@ -1,0 +1,12 @@
+This file holds what is left to be done with project.
+
+STATUS TODO:
+- Add maze support.
+- Provide comments, so others would get into project quicker.
+- Provide a better class design related to option and menu SDL_Surfaces.
+- Use more boost?
+- rewrite project with SDL 2.0.
+
+STATUS DONE:
+- remove memory leaks caused by calling TTF_RenderTextSolid() in render()
+  methods.

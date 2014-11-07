@@ -1,0 +1,8 @@
+7th November 2014
+- Added metafiles (license, todo and this one).
+
+6th November 2014
+- Fixed memleaks in render() methods.
+
+2nd November 2014
+- Game works.
