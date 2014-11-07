@@ -80,9 +80,6 @@ void clean_up() {
     TTF_Quit();
     Mix_CloseAudio();
     SDL_FreeSurface(screen);
-    if (viewScore != NULL) {
-        SDL_FreeSurface(viewScore);
-    }
     SDL_Quit();
 }
 
