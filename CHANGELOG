@@ -1,3 +1,6 @@
+13th November 2014
+- Moved files to subdirs, changed Makefile.
+
 7th November 2014
 - Added metafiles (license, todo and this one).
 
