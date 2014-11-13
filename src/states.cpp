@@ -621,7 +621,7 @@ Play::~Play() {
 
 void Play::handle_events() {
     while (SDL_PollEvent(&event)) {
-        moj.handle_input();
+        boa.handle_input();
         if (event.type == SDL_QUIT) {
             Mix_CloseAudio();
             nextState = EXIT_STATE;
@@ -730,7 +730,7 @@ int Play::pause_focus() {
 
 void Play::logic() {
     if (!paused) {
-        moj.move();
+        boa.move();
         if (!Mix_PlayingMusic()) {
             Mix_PlayMusic(ericMusic, -1);
         }
@@ -746,23 +746,23 @@ void Play::logic() {
                                             backgrounds[whichBackground][1],
                                             backgrounds[whichBackground][2])
                 );
-    jedzenie.get_position(xFoodPos, yFoodPos);
-    moj.get_position(xSnakePos, ySnakePos);
-    moj.mouth_open(moj.get_dir(), xSnake, ySnake, xFood, yFood);
+    meal.get_position(xFoodPos, yFoodPos);
+    boa.get_position(xSnakePos, ySnakePos);
+    boa.mouth_open(boa.get_dir(), xSnake, ySnake, xFood, yFood);
 
     if (((xFood >= xSnake) && (xFood <= xSnake + SNAKE_CELL_SIZE))
             && ((yFood >= ySnake) && (yFood <= ySnake + SNAKE_CELL_SIZE))) {
         score += FRAMES_PER_SECOND / 4;
         update_surface(&viewScore, font, convert_int_to_char(score, buffer), 
                        scoreColor);
-        jedzenie.reset_position();
-        moj.grow();
-        moj.mouth_change_state(false);
+        meal.reset_position();
+        boa.grow();
+        boa.mouth_change_state(false);
         if (sound) {
             Mix_PlayChannel(-1, eatSound, 0);
         }
     }
-    if (moj.check_collision()) {
+    if (boa.check_collision()) {
         if (sound) {
             Mix_PlayChannel(-1, deathSound, 0);
             SDL_Delay(300);
@@ -799,8 +799,8 @@ void Play::render() {
     }
     else if (!paused) {
         apply_surface((SCREEN_WIDTH / float(2.3)), (SCREEN_WIDTH / float(32)), viewScore, screen);
-        moj.show();
-        jedzenie.show();
+        boa.show();
+        meal.show();
     }
 }
 

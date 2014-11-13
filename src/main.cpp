@@ -1,7 +1,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "timer.h"
-#include "pokarm.h"
+#include "Food.h"
 #include "snake.h"
 #include "constants.h"
 #include "globals.h"

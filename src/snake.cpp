@@ -375,7 +375,7 @@ void Snake::get_position(int* x, int* y) {
 }
 
 /*
-   Function grow handles the event of eating a block of food.
+   Function grow handles the event of eating a block of Food.
 
    First, memory for a longer snake is allocated, then the old positions
    are copied there. The new block of snake gets the same position as
@@ -416,7 +416,7 @@ int Snake::get_dir() {
 
 /*
    Function mouth_open decides when to open snakes mouth. It opens when
-   snakes head approaches a piece of food.
+   snakes head approaches a piece of Food.
    */
 void Snake::mouth_open(int direction, int xSnake, int ySnake, int xFood,
         int yFood) {

@@ -1,3 +1,4 @@
 cscope.out
-snake
+bin/snake
 tags
+obj/*.o

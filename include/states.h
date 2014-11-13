@@ -6,7 +6,7 @@
 #include "SDL/SDL_mixer.h"
 #include "globals.h"
 #include "snake.h"
-#include "pokarm.h"
+#include "Food.h"
 #include <string>
 #include <sstream>
 
@@ -60,8 +60,8 @@ public:
     void handle_events();
     int pause_focus();
 private:
-    Snake moj;
-    Pokarm jedzenie;
+    Snake boa;
+    Food meal;
     menuEntry *pauseEntries;
     Mix_Chunk* eatSound;
     Mix_Chunk* switchSound;
