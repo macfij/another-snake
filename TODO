@@ -7,6 +7,7 @@ STATUS TODO:
 - Use more boost?
 - rewrite project with SDL 2.0.
 - Add support to vim controls (hjkl).
+- Remove unneeded includes.
 
 STATUS DONE:
 - remove memory leaks caused by calling TTF_RenderTextSolid() in render()
