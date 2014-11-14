@@ -30,6 +30,24 @@ enum PossibleStates{
     EXIT_STATE,
 };
 
+enum Menu_Options {
+    NEWGAME = 0,
+    OPTIONS,
+    HIGHSCORES,
+    EXIT_MENU,
+};
+
+enum Options {
+    SPEED = 0,
+    SNAKE_SIZE,
+    SOUND,
+    RESOLUTION,
+    FULLSCREEN,
+    CONTROLS,
+    BACKGROUND,
+    EXIT_OPTION,
+};
+
 typedef struct scoreEntry {
     int score;
     char* count;

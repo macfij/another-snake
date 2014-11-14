@@ -110,7 +110,7 @@ void Menu::handle_events() {
         }
         if (event.type == SDL_KEYDOWN) {
             switch (menu_focus()) {
-            case 0:
+            case NEWGAME:
                 if (event.key.keysym.sym == SDLK_UP || 
                     event.key.keysym.sym == SDLK_DOWN) {
                     menuEntries[0].update_state("New Game", false, scoreColor);
@@ -141,7 +141,7 @@ void Menu::handle_events() {
                     nextState = PLAY_STATE;
                 }
                 break;
-            case 1:
+            case OPTIONS:
                 if (event.key.keysym.sym == SDLK_UP ||
                     event.key.keysym.sym == SDLK_DOWN) {
                     menuEntries[1].update_state("Options", false, scoreColor);
@@ -172,7 +172,7 @@ void Menu::handle_events() {
                     nextState = OPTION_STATE;
                 }
                 break;
-            case 2:
+            case HIGHSCORES:
                 if (event.key.keysym.sym == SDLK_UP || 
                     event.key.keysym.sym == SDLK_DOWN) {
                     menuEntries[2].update_state("High Scores", false, scoreColor);
@@ -204,7 +204,7 @@ void Menu::handle_events() {
                     nextState = HIGH_SCORES_STATE;
                 }
                 break;
-            case 3:
+            case EXIT_MENU:
                 if (event.key.keysym.sym == SDLK_UP || 
                     event.key.keysym.sym == SDLK_DOWN) {
                     menuEntries[3].update_state("Exit", false, scoreColor);
@@ -351,7 +351,7 @@ void Option::handle_events() {
                                optionEntries[optionPosition].msg[0],
                                optionEntries[optionPosition].color);
                 // update option value
-                if (optionPosition != 7) {
+                if (optionPosition != EXIT_OPTION) {
                     val_update_surface(vals[optionPosition], font, 
                                        optionEntries[optionPosition].color, -1,
                                        optionPosition, false, vals[optionPosition]->enab);
@@ -376,7 +376,7 @@ void Option::handle_events() {
                 update_surface(&optionEntries[optionPosition].entry, font,
                                optionEntries[optionPosition].msg[1],
                                optionEntries[optionPosition].color);
-                if (optionPosition != 7) {
+                if (optionPosition != EXIT_OPTION) {
                     val_update_surface(vals[optionPosition], font, 
                                        optionEntries[optionPosition].color, -1,
                                        optionPosition, true, vals[optionPosition]->enab);
@@ -387,49 +387,49 @@ void Option::handle_events() {
                     Mix_PlayChannel(-1, switchSound, 0);
                 }
                 switch (optionPosition) {
-                case 0:
+                case SPEED:
                     if (FRAMES_PER_SECOND < 100)
                         FRAMES_PER_SECOND += 5;
                     val_update_surface(vals[0], font, 
                                    optionEntries[0].color, FRAMES_PER_SECOND,
                                    optionPosition, true, vals[0]->enab);
                     break;
-                case 1:
+                case SNAKE_SIZE:
                     if (SNAKE_CELL_SIZE < 30)
                         SNAKE_CELL_SIZE += 1;
                     val_update_surface(vals[1], font, 
                                    optionEntries[1].color, SNAKE_CELL_SIZE,
                                    optionPosition, true, vals[1]->enab);
                     break;
-                case 2:
+                case SOUND:
                     sound = true;
                     vals[2]->enab = true;
                     val_update_surface(vals[2], font, 
                                    optionEntries[2].color, -1,
                                    optionPosition, true, vals[2]->enab);
                     break;
-                case 3:
+                case RESOLUTION:
                     if (whichRes < 7)
                         whichRes += 1;
                     val_update_surface(vals[3], font, 
                                    optionEntries[3].color, whichRes,
                                    optionPosition, true, vals[3]->enab);
                     break;
-                case 4:
+                case FULLSCREEN:
                     fullscreen = true;
                     vals[4]->enab = true;
                     val_update_surface(vals[4], font, 
                                    optionEntries[4].color, -1,
                                    optionPosition, true, vals[4]->enab);
                     break;
-                case 5:
+                case CONTROLS:
                     isArrow = true;
                     vals[5]->enab = true;
                     val_update_surface(vals[5], font, 
                                    optionEntries[5].color, -1,
                                    optionPosition, true, vals[5]->enab);
                     break;
-                case 6:
+                case BACKGROUND:
                     whichBackground = true;
                     vals[6]->enab = true;
                     val_update_surface(vals[6], font, 
@@ -443,46 +443,49 @@ void Option::handle_events() {
                     Mix_PlayChannel(-1, switchSound, 0);
                 }
                 switch (optionPosition) {
-                case 0:
+                case SPEED:
                     if (FRAMES_PER_SECOND > 5)
                         FRAMES_PER_SECOND -= 5;
                     val_update_surface(vals[0], font, 
                                    optionEntries[0].color, FRAMES_PER_SECOND,
                                    optionPosition, true, vals[0]->enab);
                     break;
-                case 1:
+                case SNAKE_SIZE:
                     if (SNAKE_CELL_SIZE > 2)
                         SNAKE_CELL_SIZE -= 1;
                     val_update_surface(vals[1], font, 
                                    optionEntries[1].color, SNAKE_CELL_SIZE,
                                    optionPosition, true, vals[1]->enab);
                     break;
-                case 2:
+                case SOUND:
                     sound = false;
                     vals[2]->enab = false;
                     val_update_surface(vals[2], font, 
                                    optionEntries[2].color, -1,
                                    optionPosition, true, vals[2]->enab);
                     break;
-                case 3:
+                case RESOLUTION:
                     if (whichRes > 0)
                         whichRes -= 1;
+                    val_update_surface(vals[3], font, 
+                                   optionEntries[3].color, whichRes,
+                                   optionPosition, true, vals[3]->enab);
                     break;
-                case 4:
+                case FULLSCREEN:
                     fullscreen = false;
                     vals[4]->enab = false;
                     val_update_surface(vals[4], font, 
                                    optionEntries[4].color, -1,
                                    optionPosition, true, vals[4]->enab);
                     break;
-                case 5:
+                case CONTROLS:
                     isArrow = false;
                     vals[5]->enab = false;
                     val_update_surface(vals[5], font, 
                                    optionEntries[5].color, -1,
                                    optionPosition, true, vals[5]->enab);
                     break;
-                case 6:
+                case BACKGROUND:
                     whichBackground = false;
                     vals[6]->enab = false;
                     val_update_surface(vals[6], font, 

@@ -141,16 +141,19 @@ void val_update_surface(optionValue* v, TTF_Font* f, SDL_Color c, int isNum,
                         int optPos, bool focus, bool enable) {
     // do nothing if EXIT option
     if (optPos == 7) return;
+
     std::string local;
+
     // case resolution
     if (optPos == 3) {
         if (isNum != -1) {
             local = lexical_cast<std::string>(resolution[isNum][0]) +
                     "x" + lexical_cast<std::string>(resolution[isNum][1]);
             update_surface(&(v->entry), f, local.c_str(), c);
+            v->curr = local;
         }
         else { // use the old value
-            update_surface(&(v->entry), f, v->msg[0].c_str(), c);
+            update_surface(&(v->entry), f, v->curr.c_str(), c);
         }
         return;
     }
